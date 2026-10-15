@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>自律神経薬理学テキスト</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: 1カラムの読み物。上部固定ナビ → 表紙 → 使い方 → 分野一覧 → 分野ごとの問題カード（Apple HIG のグループ化リスト風） */
+:root{
+  --bg:#F2F2F7; --card:#FFFFFF; --fg:#1C1C1E; --fg2:#3C3C4399; --fg2s:#6C6C70;
+  --sep:#C6C6C8; --fill:#E9E9EE; --accent:#248A3D; --accentFill:#34C759;
+  --accentSoft:#E3F5E7; --ok:#248A3D; --okSoft:#E3F5E7; --ng:#D70015; --ngSoft:#FDE7E9;
+  --warn:#C93400; --warnSoft:#FFF0E3; --nav:rgba(242,242,247,.86); --ecgBg:#FFF7F7; --ecgMinor:#F4CDD0; --ecgMajor:#E39AA0; --ecgTrace:#1C1C1E;
+  --font:"Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --card:#1C1C1E; --fg:#F2F2F7; --fg2:#EBEBF599; --fg2s:#98989F;
+  --sep:#38383A; --fill:#2C2C2E; --accent:#30D158; --accentFill:#30D158;
+  --accentSoft:#12331B; --ok:#30D158; --okSoft:#12331B; --ng:#FF6961; --ngSoft:#3A1517;
+  --warn:#FF9F0A; --warnSoft:#3A2608; --nav:rgba(18,18,20,.86); --ecgBg:#1E1517; --ecgMinor:#45292D; --ecgMajor:#74393F; --ecgTrace:#F2F2F7; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --card:#1C1C1E; --fg:#F2F2F7; --fg2:#EBEBF599; --fg2s:#98989F;
+  --sep:#38383A; --fill:#2C2C2E; --accent:#30D158; --accentFill:#30D158;
+  --accentSoft:#12331B; --ok:#30D158; --okSoft:#12331B; --ng:#FF6961; --ngSoft:#3A1517;
+  --warn:#FF9F0A; --warnSoft:#3A2608; --nav:rgba(18,18,20,.86); --ecgBg:#1E1517; --ecgMinor:#45292D; --ecgMajor:#74393F; --ecgTrace:#F2F2F7; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--navh,49px) + 64px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+a{color:var(--accent);text-decoration:none}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--nav);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:.5px solid var(--sep)}
+.nav-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;max-width:760px;margin:0 auto;
+  padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{flex:none;font-size:14px;font-weight:500;padding:6px 12px;border-radius:980px;color:var(--accent);white-space:nowrap}
+.nav a:hover,.nav a:focus-visible{background:var(--accentSoft);outline:none}
+.wrap{max-width:760px;margin:0 auto;padding-block:8px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding:32px 4px 8px}
+header.top .eyebrow{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.04em}
+h1{font-size:34px;line-height:1.2;font-weight:700;margin:4px 0 6px;letter-spacing:-.01em;text-wrap:balance}
+.byline{color:var(--fg2s);font-size:14px;margin:0}
+h2{font-size:22px;font-weight:700;margin:36px 4px 10px;text-wrap:balance}
+.group{background:var(--card);border-radius:12px;overflow:hidden}
+.group p{margin:0;padding:14px 16px;font-size:15px}
+.legend{display:flex;flex-direction:column;gap:8px;padding:0 16px 14px;font-size:14px;color:var(--fg2s)}
+.legend div{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.list a{display:flex;align-items:center;gap:12px;padding:12px 16px;color:var(--fg);border-top:.5px solid var(--sep)}
+.list a:first-child{border-top:0}
+.list a:hover{background:var(--fill)}
+.list .nm{flex:1;min-width:0;font-weight:500}
+.list .ct{color:var(--fg2s);font-size:14px;font-variant-numeric:tabular-nums}
+.list .sc{font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums;min-width:4.5em;text-align:right}
+.soon .row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:.5px solid var(--sep)}
+.soon .row:first-child{border-top:0}
+.soon .row .ct{color:var(--accent);font-weight:600}
+.soonrow{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:.5px solid var(--sep)}
+.soonrow .ct{color:var(--fg2s)}.soonrow .nm{flex:1;color:var(--fg2s)}
+.soon .row.dim .nm,.soon .row.dim .ct{color:var(--fg2s)}
+.list .chev{color:var(--fg2s);font-size:18px}
+section.sec{scroll-margin-top:60px}
+.sechead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:44px 4px 6px}
+.sechead h2{margin:0}
+.secdesc{margin:0 4px 12px;color:var(--fg2s);font-size:14px}
+.score{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--navh,49px));z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--card);border-radius:12px;padding:10px 12px 10px 16px;margin-bottom:12px;box-shadow:0 1px 0 var(--sep),0 6px 16px -10px rgba(0,0,0,.25)}
+.score .nm{font-weight:700;margin-right:6px}
+.score .acts{display:flex;gap:6px;flex:none}
+.btn.sub{background:var(--fill);color:var(--fg)}
+.set{border-top:.5px solid var(--sep)}
+.set label{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:.5px solid var(--sep);cursor:pointer;font-size:15px}
+.set .note{padding:10px 16px 14px;font-size:13px;color:var(--fg2s)}
+.sw{appearance:none;-webkit-appearance:none;flex:none;width:51px;height:31px;border-radius:16px;background:var(--fill);position:relative;cursor:pointer;transition:background .2s;margin:0}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .2s}
+.sw:checked{background:var(--accentFill)}
+.sw:checked::after{transform:translateX(20px)}
+.sw:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.score b{font-variant-numeric:tabular-nums}
+.score .bar{flex:1;height:4px;background:var(--fill);border-radius:2px;overflow:hidden;max-width:220px}
+.score .bar i{display:block;height:100%;width:0;background:var(--accentFill);transition:width .3s}
+.btn{font:inherit;font-size:14px;font-weight:600;color:var(--accent);background:var(--accentSoft);border:0;border-radius:980px;padding:6px 14px;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.qs{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--card);border-radius:14px;padding:16px}
+.qhead{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.qno{font-weight:700;font-size:15px;margin-right:4px}
+.chip{font-size:12px;font-weight:600;line-height:1;padding:5px 8px;border-radius:6px;white-space:nowrap}
+.c-past{background:var(--accentSoft);color:var(--accent)}
+.c-sim{background:var(--fill);color:var(--fg2s)}
+.c-streak{background:var(--warnSoft);color:var(--warn)}
+.c-imp{background:transparent;color:var(--accent);padding-left:2px;letter-spacing:.06em}
+.stem{margin:0 0 10px;font-size:16px;white-space:pre-line}
+.items{list-style:none;margin:0 0 12px;padding:10px 12px;background:var(--fill);border-radius:10px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.items li{display:grid;grid-template-columns:1.6em 1fr;gap:4px}
+.items li span:first-child{font-weight:700;color:var(--accent)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;width:100%;text-align:left;font:inherit;font-size:15px;color:var(--fg);
+  background:transparent;border:1px solid var(--sep);border-radius:10px;padding:10px 12px;cursor:pointer;transition:background .15s,border-color .15s}
+.opt:hover{background:var(--fill)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .lt{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--fill);font-weight:700;font-size:14px}
+.opt .tx{min-width:0;padding-top:2px}
+.opt .nt{display:block;font-size:13px;color:var(--fg2s);margin-top:4px}
+.q.done .opt{cursor:default}
+.q.done .opt:hover{background:transparent}
+.opt.right{border-color:var(--ok);background:var(--okSoft)}
+.opt.right .lt{background:var(--ok);color:var(--card)}
+.opt.wrong{border-color:var(--ng);background:var(--ngSoft)}
+.opt.wrong .lt{background:var(--ng);color:var(--card)}
+.q.done .opt.right:hover{background:var(--okSoft)}
+.q.done .opt.wrong:hover{background:var(--ngSoft)}
+.verdict{font-weight:700;margin:12px 0 0;font-size:15px}
+.verdict.ok{color:var(--ok)}.verdict.ng{color:var(--ng)}
+details.ex{margin-top:12px;border-top:.5px solid var(--sep);padding-top:10px}
+details.ex summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:15px;list-style:none}
+details.ex summary::-webkit-details-marker{display:none}
+details.ex summary::before{content:"›";display:inline-block;margin-right:6px;transition:transform .2s}
+details.ex[open] summary::before{transform:rotate(90deg)}
+.exb{padding-top:8px;font-size:15px}
+.exb .ans{font-weight:700;margin:0 0 6px}
+.exb p{margin:0 0 8px}
+.exb ul{margin:6px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.exb li{display:grid;grid-template-columns:3.6em 1fr;gap:4px}
+.exb li b{white-space:nowrap}
+.exb li b.o{color:var(--ok)}.exb li b.x{color:var(--ng)}
+.back{display:block;text-align:center;margin:18px 0 0;font-size:15px}
+footer{color:var(--fg2s);font-size:13px;text-align:center;margin-top:40px}
+@media (max-width:420px){h1{font-size:28px}.score .bar{display:none}}
+.ki{display:inline-block;font-size:11px;font-weight:700;line-height:1;color:var(--ng);background:var(--ngSoft);border:1px solid var(--ng);border-radius:5px;padding:3px 6px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.kres{display:block;margin-top:5px;padding:8px 10px;border-radius:8px;background:var(--ngSoft);font-size:14px;line-height:1.55}
+.kres b{color:var(--ng)}
+.kalert{margin:12px 0 0;padding:12px 14px;border-radius:10px;background:var(--ngSoft);border:1px solid var(--ng);font-size:14px}
+.kalert strong{display:block;color:var(--ng);font-size:15px;margin-bottom:4px}
+.kalert p{margin:4px 0 0}
+.opt.kopt{border-style:dashed}
+.fig{margin:0 0 12px;padding:0;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;margin:0 auto;font-family:var(--font)}
+.fig figcaption{font-size:13px;color:var(--fg2s);margin-top:6px;line-height:1.55}
+.exb .fig{margin-top:10px}
+.f-tx{fill:var(--fg);font-size:12px}.f-sm{fill:var(--fg2s);font-size:11px}
+.f-hx{fill:var(--accent);font-size:13px;font-weight:700}.f-hx2{fill:var(--fg);font-size:12px;font-weight:700}
+.f-acx{fill:var(--accent);font-size:12px;font-weight:600}.f-wx{fill:var(--warn);font-size:12px;font-weight:600}
+.f-big{fill:var(--fg2s);font-size:22px;font-weight:700;opacity:.55}.f-dotx{fill:var(--card);font-size:11px;font-weight:700}
+.f-mu{stroke:var(--fg2s);stroke-width:1.2}.f-dash{stroke:var(--fg2s);stroke-width:1;stroke-dasharray:4 3;fill:none}
+.f-curve{fill:none;stroke:var(--fg);stroke-width:2;stroke-linejoin:round}.f-curve2{fill:none;stroke:var(--accent);stroke-width:2}
+.f-curve3{fill:none;stroke:var(--warn);stroke-width:2;stroke-dasharray:6 3}
+.f-loop{fill:none;stroke:var(--fg);stroke-width:2}.f-loop2{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-dasharray:6 3}.f-loop3{fill:none;stroke:var(--warn);stroke-width:2}
+.f-box{fill:var(--fill);stroke:var(--sep)}.f-boxa{fill:var(--accentSoft);stroke:var(--accent)}.f-bg{fill:var(--fill);opacity:.6}
+.f-dot{fill:var(--accent)}.f-pt{fill:var(--ng)}.f-row{fill:var(--fill)}.f-row2{fill:var(--card)}.f-arr{fill:var(--fg2s)}
+.f-tube{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;opacity:.4}
+.f-ecgbg{fill:var(--ecgBg)}.f-ecg1{stroke:var(--ecgMinor);stroke-width:.5;fill:none}.f-ecg2{stroke:var(--ecgMajor);stroke-width:1;fill:none}
+.f-trace{fill:none;stroke:var(--ecgTrace);stroke-width:1.6;stroke-linejoin:round}
+
+.intro p{font-size:15px}
+.toc .no{width:26px;height:26px;border-radius:50%;background:var(--accentSoft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.ch{scroll-margin-top:64px}
+.ch>h2{display:flex;align-items:flex-start;gap:10px;margin:48px 4px 12px}
+.ch>h2 .tt{flex:1;min-width:0;padding-top:1px}
+.ch>h2 .chip{vertical-align:3px;margin-left:4px}
+.cn{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--accentFill);color:var(--card);font-size:17px;font-weight:700;flex:none}
+.card{background:var(--card);border-radius:14px;padding:18px 16px;font-size:16px;line-height:1.75}
+.card>p{margin:0 0 12px}
+.card h3{font-size:18px;margin:28px 0 10px;text-wrap:balance}
+.defs{margin:0}.defs dt{font-weight:700;color:var(--accent);margin-top:12px}.defs dd{margin:2px 0 0}
+.pts{padding-left:1.2em;margin:0 0 12px}.pts li{margin:7px 0}
+.tbl{overflow-x:auto;margin:12px 0 16px;border:.5px solid var(--sep);border-radius:10px}
+.tbl table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.55}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:.5px solid var(--sep);text-align:left;vertical-align:top}
+.tbl tr:last-child>*{border-bottom:0}
+.tbl thead th{background:var(--fill);font-size:13px;color:var(--fg2s);white-space:nowrap}
+.tbl tbody th{color:var(--accent);min-width:3.5em}
+.tbl table.wide{min-width:640px}
+.tbl td.num{text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ox td.o,.ox td.x{text-align:center;font-weight:700;white-space:nowrap}.ox td.o{color:var(--ok)}.ox td.x{color:var(--ng)}
+.box{border-radius:12px;padding:12px 14px;margin:14px 0;font-size:15px;line-height:1.7}
+.box p{margin:4px 0}.bt{font-weight:700;font-size:14px;margin-bottom:2px}
+.box.mem{background:var(--accentSoft)}.mem .bt{color:var(--accent)}
+.box.trap{background:var(--fill)}.trap .bt{color:var(--fg)}
+.box.cl{background:var(--warnSoft)}.cl .bt{color:var(--warn)}
+.box.kin{background:var(--ngSoft);border:1px solid var(--ng)}.kin .bt{color:var(--ng)}
+.fm{font-weight:700;text-align:center;margin-top:8px!important}
+.ex{background:var(--card);border-radius:14px;padding:14px 16px;margin-top:12px;border:1px dashed var(--accent)}
+.et{font-weight:700;color:var(--accent);margin-bottom:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ex p{margin:0 0 6px;font-size:15px;line-height:1.7}
+.ex details summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:15px}
+.ex details p{margin-top:8px;padding:10px 12px;background:var(--fill);border-radius:8px}
+.card .ex.in{margin:12px 0}
+.card .ex.in .et{color:var(--fg);font-size:15px;line-height:1.6}
+.note{font-size:13px;color:var(--fg2s)}
+.go{display:block;text-align:center;margin-top:16px;padding:12px;border-radius:12px;background:var(--accentSoft);font-weight:600}
+.f-shade{fill:var(--accent);opacity:.12}
+.ans{margin-top:10px;padding:12px 10px;border-radius:10px;background:var(--fill);font-size:15px;line-height:1.75}
+.ans .ah{font-weight:700;color:var(--accent);font-size:14px;margin:0 0 6px}
+.ans p{margin:0 0 10px;padding:0;background:none}
+.ans ul{margin:4px 0 0;padding-left:1.2em}
+.ans .fig{background:var(--card);border-radius:8px;padding:8px}
+.ex details .ans p{margin:0 0 10px;padding:0;background:none}
+.f-area1{fill:var(--fg);opacity:.07}.f-area2{fill:var(--accent);opacity:.2}.f-mem{fill:var(--fill);stroke:var(--sep)}
+.f-ac2{stroke:var(--accent);stroke-width:1.6}.f-ng2{stroke:var(--ng);stroke-width:1.6}.f-ngx{fill:var(--ng);font-size:12px;font-weight:600}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-arr"/></marker></defs></svg>
+<nav class="nav" aria-label="目次"><div class="nav-in">
+  <a href="#top">目次</a><a href="#c1">構成</a><a href="#c2">受容体と作用</a><a href="#c3">作動薬</a><a href="#c4">遮断薬</a><a href="#c5">コリン作動薬</a><a href="#c6">抗コリン薬</a><a href="#c7">記述対策</a><a href="#c8">頻出まとめ</a>
+</div></nav>
+<div class="wrap" id="top">
+  <header class="top">
+    <div class="eyebrow">横浜市立大学 医学部 薬理学試験対策</div>
+    <h1>自律神経薬理学テキスト</h1>
+    <p class="byline">文責：矢作颯真</p>
+  </header>
+
+  <div class="group intro">
+    <p>徳留先生の自律神経薬理学のスライドとシケプリを整理し直したテキストです。<span class="chip c-streak">3年連続</span>は2023〜2025年に続けて出題されたテーマ、<span class="chip c-past">2025年 問9</span>は対応する過去問です。自律神経は毎年10問前後出題され、記述問題（Gs/Gi/Gq、アドレナリンとノルアドレナリン、ドパミン、抗ムスカリン薬）も繰り返し出ています。問題演習は<a href="index.html#s1">短答問題集の自律</a>で。</p>
+  </div>
+
+  <h2>目次</h2>
+  <div class="group list toc">
+    <a href="#c1"><span class="no">1</span><span class="nm">自律神経系の構成と伝達物質</span><span class="chev">›</span></a>
+    <a href="#c2"><span class="no">2</span><span class="nm">受容体と臓器ごとの作用</span><span class="chev">›</span></a>
+    <a href="#c3"><span class="no">3</span><span class="nm">アドレナリン作動薬</span><span class="chev">›</span></a>
+    <a href="#c4"><span class="no">4</span><span class="nm">アドレナリン受容体遮断薬・交感神経抑制薬</span><span class="chev">›</span></a>
+    <a href="#c5"><span class="no">5</span><span class="nm">コリン作動薬</span><span class="chev">›</span></a>
+    <a href="#c6"><span class="no">6</span><span class="nm">抗コリン薬（抗ムスカリン薬）</span><span class="chev">›</span></a>
+    <a href="#c7"><span class="no">7</span><span class="nm">記述問題対策</span><span class="chev">›</span></a>
+    <a href="#c8"><span class="no">8</span><span class="nm">頻出ポイントまとめ</span><span class="chev">›</span></a>
+  </div>
+
+  <!-- 1 -->
+  <section class="ch" id="c1">
+    <h2><span class="cn">1</span><span class="tt">自律神経系の構成と伝達物質 <span class="chip c-past">2024年 問41</span></span></h2>
+    <div class="card">
+      <p>自律神経系は<b>末梢神経系</b>に属し、交感神経系と副交感神経系からなる。どちらも<b>遠心路と求心路をもつ</b>。腹部迷走神経の<b>90%は求心性線維</b>（2025年問7では「遠心性」として誤り選択肢）。2026年度のスライドでは「迷走神経の<b>80%</b>は求心性線維」と書かれているので、「大部分が求心性」と押さえておく。</p>
+      <div data-fig="ans"></div>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>交感神経</th><th>副交感神経</th></tr></thead>
+        <tbody>
+          <tr><th>起始</th><td>胸腰髄（T1〜L3）</td><td>脳幹（中脳・橋・延髄）と仙髄（S2〜S4）</td></tr>
+          <tr><th>神経節の伝達</th><td>ACh → ニコチン受容体</td><td>ACh → ニコチン受容体</td></tr>
+          <tr><th>節後の伝達物質</th><td>ノルアドレナリン（汗腺はACh）</td><td>アセチルコリン</td></tr>
+          <tr><th>効果器の受容体</th><td>α・β受容体</td><td>ムスカリン受容体</td></tr>
+          <tr><th>求心路の伝達物質</th><td>グルタミン酸（痛み・虚血などの異常情報を脊髄後角へ）</td><td>グルタミン酸（血圧・消化管伸展などの生理的情報を延髄孤束核へ）</td></tr>
+          <tr><th>働きのイメージ</th><td>闘争・逃走（心拍↑・気管支拡張・散瞳）</td><td>休息・消化（心拍↓・消化管運動↑・縮瞳）</td></tr>
+        </tbody>
+      </table></div>
+      <p>骨格筋の神経筋接合部のACh受容体もニコチン型（Nm）。自律神経節はNn。<b>ニコチン受容体はイオンチャネル内蔵型</b>（セカンドメッセンジャーなし）、<b>ムスカリン受容体とアドレナリン受容体（α・β）はGPCR</b>。</p>
+
+      <h3>アセチルコリンとノルアドレナリンの一生</h3>
+      <div data-fig="achsyn"></div>
+      <div data-fig="nasyn"></div>
+      <p>ドパミンはシナプス小胞に取り込まれてから<b>ドパミンβ水酸化酵素</b>でNAになる。放出されたNAの多くはノルアドレナリントランスポーターで神経終末に再取り込みされ、再利用される。分解酵素はMAOとCOMT。一方AChは血中では検出できない（ChEで速やかに分解）。</p>
+      <div class="box trap"><div class="bt">ひっかけ</div>
+        <p>「AChはコリンアセチルトランスフェラーゼで分解される」<b>×</b>（合成酵素。分解はAChE）。「AChの作用時間は約5分」<b>×</b>（5〜30秒）。「α₂受容体刺激でNA放出は促進される」<b>×</b>（抑制）。「交感神経節の伝達物質はニコチン」<b>×</b>（AChで、受容体がニコチン型）。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="ch" id="c2">
+    <h2><span class="cn">2</span><span class="tt">受容体と臓器ごとの作用 <span class="chip c-streak">3年連続</span></span></h2>
+    <div class="card">
+      <div class="box mem"><div class="bt">まずこれを覚える</div>
+        <p><b>α₁</b>：血管・筋肉が収縮　<b>α₂</b>：伝達抑制（NA放出↓）<br><b>β₁</b>：心臓パワーアップ（＋レニン分泌）　<b>β₂</b>：平滑筋弛緩・気管支拡張<br><b>β₃</b>：膀胱の弛緩＝蓄尿（脂肪細胞では脂肪分解）<br><b>M₂</b>：心臓の働きを弱める　<b>M₃</b>：気管支・消化管収縮、縮瞳、分泌↑</p>
+      </div>
+      <div class="tbl"><table class="wide">
+        <thead><tr><th>臓器</th><th>交感神経（受容体：作用）</th><th>副交感神経（受容体：作用）</th></tr></thead>
+        <tbody>
+          <tr><th>眼</th><td>α₁：瞳孔散大筋収縮（散瞳）<br>β₂：毛様体筋弛緩（眼圧上昇）</td><td>M₃：瞳孔括約筋収縮（縮瞳）、毛様体筋収縮（近方視・眼房水流出↑）</td></tr>
+          <tr><th>心臓</th><td>β₁：心拍数↑・収縮力↑・伝導↑</td><td>M₂：心拍数↓・伝導↓（<b>心房にのみ分布、心室にはほぼない</b>）</td></tr>
+          <tr><th>血管</th><td>α₁：収縮（皮膚・腹部内臓・腎）<br>β₂：拡張（<b>心臓・肺・骨格筋</b>）</td><td>（M₃：内皮からNO→拡張。神経支配は乏しい）</td></tr>
+          <tr><th>気管支</th><td>β₂：拡張</td><td>M₃：収縮・分泌↑</td></tr>
+          <tr><th>消化管</th><td>α₂・β₂：運動抑制</td><td>M₃：運動亢進・分泌↑、M₁：胃酸分泌↑</td></tr>
+          <tr><th>肝臓</th><td>β₂：グリコーゲン分解（血糖↑）</td><td>—</td></tr>
+          <tr><th>腎臓</th><td>β₁：レニン分泌</td><td>—</td></tr>
+          <tr><th>膀胱</th><td>β₃：排尿筋弛緩、α₁：内尿道括約筋収縮（蓄尿）</td><td>M₃：排尿筋収縮（排尿）</td></tr>
+          <tr><th>子宮</th><td>β₂：弛緩</td><td>—</td></tr>
+          <tr><th>汗腺</th><td>M₃（交感神経だがACh）：全身の発汗<br>α₁：手掌・足底の発汗</td><td>—</td></tr>
+          <tr><th>脂肪組織</th><td>β₃：脂肪分解促進</td><td>—</td></tr>
+          <tr><th>男性生殖器</th><td>α₁：射精</td><td>NO：勃起</td></tr>
+        </tbody>
+      </table></div>
+      <h3>受容体とGタンパク質</h3>
+      <div data-fig="gpcr"></div>
+      <p>cAMPを<b>増やす</b>のはGs共役のβ₁・β₂・β₃、<b>減らす</b>のはGi共役のα₂・M₂。α₁・M₁・M₃はGqでIP₃・DG→Ca²⁺を増やす。</p>
+      <div class="box mem"><div class="bt">血管のβ₂：「心・肺・筋の血管を開く」</div>
+        <p>交感神経が興奮すると、活動に必要な心臓（冠動脈）・肺・骨格筋の血管はβ₂優位で拡張し、皮膚・腹部内臓・腎臓はα₁優位で収縮する。冠動脈のβ₂優位は2023年問14・2024年問48・2025年問9と3年連続。</p>
+        <p>皮膚・粘膜の血管には<b>α₁受容体しかない</b>。そのためアドレナリンは皮膚・粘膜では純粋な血管収縮薬として働き、局所止血（鼻出血・手術時）や局所麻酔薬の作用時間延長に使われる。</p>
+      </div>
+    </div>
+    <div class="ex">
+      <div class="et">例題 2-1 <span class="chip c-past">2024年 問43</span></div>
+      <p>正しいものを3つ選べ。<br>ア 毛様体筋はM₃刺激で収縮　イ 膀胱排尿筋はβ₃刺激で収縮　ウ 膀胱排尿筋はM₃刺激で弛緩　エ 気管支平滑筋はM₃刺激で収縮　オ 洞結節のM₂刺激で心拍数は減少</p>
+      <details><summary>答えを見る</summary><p><b>ア・エ・オ</b>。膀胱排尿筋はβ₃で弛緩（蓄尿）、M₃で収縮（排尿）。</p></details>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="ch" id="c3">
+    <h2><span class="cn">3</span><span class="tt">アドレナリン作動薬 <span class="chip c-streak">3年連続</span></span></h2>
+    <div class="card">
+      <h3>カテコールアミン5種</h3>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>薬</th><th>作用する受容体</th></tr></thead>
+        <tbody>
+          <tr><th rowspan="3">内因性</th><td>アドレナリン</td><td>α₁・α₂・β₁・β₂</td></tr>
+          <tr><td>ノルアドレナリン</td><td>α₁・α₂・β₁</td></tr>
+          <tr><td>ドパミン</td><td>α₁・β₁・D₁</td></tr>
+          <tr><th rowspan="2">外因性</th><td>イソプレナリン</td><td>β₁・β₂</td></tr>
+          <tr><td>ドブタミン</td><td>β₁</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">内因性はアドレナリン・ノルアドレナリン・ドパミンの3つ（2023年問13イ「イソプレナリンは内因性」×）。</p>
+
+      <h3>作用様式による分類</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>分類</th><th>しくみ</th><th>薬</th></tr></thead>
+        <tbody>
+          <tr><th>直接型</th><td>受容体に結合して刺激</td><td>アドレナリン、ノルアドレナリン、イソプレナリン、ドブタミン、フェニレフリン、サルブタモール など</td></tr>
+          <tr><th>混合型</th><td>直接作用＋NA放出促進</td><td><b>エフェドリン</b>、ドパミン</td></tr>
+          <tr><th>間接型</th><td>受容体には結合せず、NAの分泌促進・分解阻害・再取り込み阻害</td><td><b>メタンフェタミン</b>、アンフェタミン、チラミン</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>アドレナリンとノルアドレナリン</h3>
+      <div class="box mem"><div class="bt">最重要：用量と受容体の優先順位（スライド）</div>
+        <p>アドレナリン<b>低濃度（筋注）</b>：β₂＞β₁＞α₁＝α₂<br>アドレナリン<b>高濃度（静注）</b>：α₁＝α₂＞β₁≫β₂<br>ノルアドレナリン：α₁＞α₂＞β₁≫β₂</p>
+        <p>アナフィラキシーでは大腿に<b>筋注</b>し、β₂作用（気管支拡張）を優先して得る。</p>
+      </div>
+      <div data-fig="adrna"></div>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>アドレナリン</th><th>ノルアドレナリン</th></tr></thead>
+        <tbody>
+          <tr><th>第一選択</th><td><b>アナフィラキシーショック</b>、心肺蘇生、気管支けいれん（重篤な喘息発作）</td><td><b>敗血症性ショック</b>（末梢血管抵抗が著明に低下）</td></tr>
+          <tr><th>その他</th><td>局所麻酔薬の作用時間延長、手術時の局所止血、気管支喘息発作、蕁麻疹・皮膚瘙痒</td><td>急性低血圧</td></tr>
+          <tr><th>覚え方</th><td>α・βいずれも強い</td><td>α₁が強く、β₁は弱く、β₂はほぼない。心拍数は血圧上昇による反射で低下</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box kin"><div class="bt">禁忌肢：アナフィラキシーにノルアドレナリン</div>
+        <p>ノルアドレナリンにはβ₂作用がほとんどないため、気管支攣縮・喉頭浮腫が改善せず、窒息・心停止に至りうる。アナフィラキシーは<b>アドレナリン</b>（2025年問9イ・2024年問46オ）。</p>
+      </div>
+
+      <h3>ドパミン：用量で作用が変わる</h3>
+      <div data-fig="dopa"></div>
+      <p>中枢の重要な神経伝達物質だが、全身投与しても<b>血液脳関門を通らない</b>ため中枢作用はない。末梢のD₁・β₁・α₁受容体を用量に応じて刺激し、NA分泌促進作用も併せもつ。</p>
+      <div class="tbl"><table>
+        <thead><tr><th>用量</th><th>主な作用</th><th>腎血流</th></tr></thead>
+        <tbody>
+          <tr><th>低用量（2 μg/kg/分以下）</th><td>D₁：腎血管拡張・利尿</td><td>↑</td></tr>
+          <tr><th>中用量（2〜10）</th><td>β₁：陽性変力・心拍数↑（5程度からα₁も）</td><td>↑（D₁＋心拍出量↑）</td></tr>
+          <tr><th>高用量（10以上）</th><td>α₁：末梢・腎血管収縮、不整脈が増える</td><td><b>↓</b>（α₁がD₁を上回る）</td></tr>
+        </tbody>
+      </table></div>
+      <p>適応は急性循環不全（心原性・敗血症性・出血性ショック）。<b>禁忌は褐色細胞腫</b>。副作用に不整脈・四肢冷感・麻痺性イレウス。</p>
+
+      <h3>その他の作動薬</h3>
+      <div class="tbl"><table class="wide">
+        <thead><tr><th>受容体</th><th>薬</th><th>主な使い方・特徴</th></tr></thead>
+        <tbody>
+          <tr><th>α₁</th><td>ナファゾリン・トラマゾリン（点鼻）<br>フェニレフリン（注・点眼）<br>ミドドリン（内服）</td><td>鼻粘膜の血管収縮で鼻閉・充血改善（5〜7日以上の連用で<b>薬剤性鼻炎</b>）／急性低血圧・散瞳（眼底検査）・局麻の作用延長／本態性・起立性低血圧</td></tr>
+          <tr><th>β₁β₂</th><td>イソプレナリン（合成カテコールアミン）</td><td>高度の徐脈（アダムス・ストークス症候群）、気管支けいれん。<b>心拍数増加作用が最も強い</b>。禁忌：閉塞性肥大型心筋症・ジギタリス中毒・頻脈性不整脈。致死性不整脈の危険とペースメーカーの普及で、現在はほぼ使われない</td></tr>
+          <tr><th>β₁</th><td>ドブタミン（注）<br>デノパミン（内服）</td><td>急性心不全（デノパミンは慢性心不全）。<b>収縮力↑が主で、心拍数増加・血管作用は弱く、心筋酸素消費量を低く抑える</b>。ラセミ体で、α₁刺激とα₁遮断・弱いβ₂刺激が相殺されるため血圧変動・反射性頻脈が少ない。禁忌：閉塞性肥大型心筋症</td></tr>
+          <tr><th>β₂</th><td>サルブタモールなど<br>クレンブテロール<br>リトドリン</td><td>気管支喘息・COPD（慢性気管支炎・肺気腫）／腹圧性尿失禁／子宮収縮抑制（切迫流産・早産）。高濃度ではβ₁作用（頻脈）も出る</td></tr>
+          <tr><th>β₃</th><td>ミラベグロン</td><td>膀胱を弛緩させる（頻尿・過活動膀胱）</td></tr>
+          <tr><th>混合型</th><td>エフェドリン</td><td>β₁・β₂は直接、α₁はNA放出で間接的に刺激。非カテコールアミンなのでCOMT・MAOで分解されず、経口で長時間効く。<b>血液脳関門を通る</b>。気管支拡張・中枢性鎮咳。副作用に低K血症・不整脈。市販かぜ薬の過量服薬（オーバードーズ）やドーピング禁止物質として問題</td></tr>
+          <tr><th>間接型</th><td>メタンフェタミン<br>チラミン<br>アメジニウム</td><td>メタンフェタミン：NA分泌促進・再取り込み阻害・MAO阻害。中枢のドパミン神経終末からドパミンを放出させ強い多幸感。<b>覚醒剤取締法</b>で規制（麻薬ではない）。適応はナルコレプシーだが現在はまれ。依存性、MAO阻害薬と併用禁忌<br>チラミン：分泌促進　アメジニウム：再取り込み阻害</td></tr>
+        </tbody>
+      </table></div>
+      <h3>カテコールアミンの循環動態まとめ（重要）</h3>
+      <div class="tbl"><table class="wide">
+        <thead><tr><th></th><th>アドレナリン</th><th>ノルアドレナリン</th><th>ドパミン</th><th>ドブタミン</th><th>イソプレナリン</th></tr></thead>
+        <tbody>
+          <tr><th>末梢血管抵抗</th><td>↓〜↑</td><td>↑↑↑</td><td>↓（低）↑（高）</td><td>↓〜→</td><td>↓↓↓</td></tr>
+          <tr><th>心拍数</th><td>↑</td><td>↓</td><td>↑</td><td>↑</td><td>↑↑↑</td></tr>
+          <tr><th>心筋収縮力</th><td>↑↑</td><td>↑</td><td>↑</td><td>↑↑↑</td><td>↑↑</td></tr>
+          <tr><th>心拍出量</th><td>↑↑</td><td>↑〜↓</td><td>↑↑↑</td><td>↑↑</td><td>↑↑↑</td></tr>
+          <tr><th>収縮期血圧</th><td>↑↑</td><td>↑↑↑</td><td>↑</td><td>↑</td><td>↑</td></tr>
+          <tr><th>拡張期血圧</th><td>↓</td><td>↑</td><td>↑</td><td>→</td><td>↓</td></tr>
+          <tr><th>平均血圧</th><td>↑</td><td>↑↑</td><td>↑</td><td>↑</td><td>↓</td></tr>
+          <tr><th>腎血流量</th><td>↓</td><td>↓</td><td>↑↑↑</td><td>↓〜→</td><td>↓〜↑</td></tr>
+          <tr><th>気管支拡張</th><td>＋</td><td>−</td><td>−</td><td>−</td><td>＋</td></tr>
+          <tr><th>主な適応</th><td>心肺蘇生・重篤な喘息発作・アナフィラキシー</td><td>敗血症性ショック</td><td colspan="2">急性心不全・急性循環不全（併用も多い）</td><td>高度徐脈・気管支けいれん</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box trap"><div class="bt">ひっかけ</div>
+        <p>「ドブタミンは心拍数増加作用が強い」<b>×</b>。「ドブタミンで末梢血管抵抗は上昇」<b>×</b>。「サルブタモールは慢性気管支炎に禁忌」<b>×</b>（適応）。「リトドリンは子宮収縮を促進」<b>×</b>。「フェニレフリンはα₂作動薬」<b>×</b>（α₁）。「エフェドリンは間接型」<b>×</b>（混合型）。「メタンフェタミンは麻薬」<b>×</b>。</p>
+      </div>
+    </div>
+    <div class="ex">
+      <div class="et">例題 3-1 <span class="chip c-past">2025年 問10</span></div>
+      <p>正しいものを3つ選べ。<br>ア サルブタモールは慢性気管支炎に禁忌　イ ナファゾリンで粘膜充血は改善する　ウ ドブタミンの心拍数増加作用は収縮力増加作用より弱い　エ ドブタミンの後負荷軽減はβ₂刺激による　オ ドブタミンは心筋酸素需要量を顕著に増加させる</p>
+      <details><summary>答えを見る</summary><p><b>イ・ウ・エ</b>。</p></details>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="ch" id="c4">
+    <h2><span class="cn">4</span><span class="tt">アドレナリン受容体遮断薬・交感神経抑制薬 <span class="chip c-streak">3年連続</span></span></h2>
+    <div class="card">
+      <h3>α遮断薬と中枢性交感神経抑制薬</h3>
+      <div class="tbl"><table class="wide">
+        <thead><tr><th>分類</th><th>薬</th><th>使い方</th><th>注意</th></tr></thead>
+        <tbody>
+          <tr><th>非選択的α</th><td>フェントラミン（注）</td><td>褐色細胞腫（術前・術中の血圧管理、診断）</td><td>α₂遮断でNA放出↑→頻脈・不整脈。心筋梗塞・狭心症は禁忌</td></tr>
+          <tr><th>α₁遮断</th><td>プラゾシン</td><td><b>前立腺肥大を伴う高血圧</b>（内尿道括約筋が弛緩）</td><td><b>起立性低血圧</b>（立ちくらみ）→高齢者には控える</td></tr>
+          <tr><th>α₂刺激（中枢性）</th><td><b>メチルドパ</b>・<b>クロニジン</b>・グアナベンズ</td><td>延髄の血管運動中枢と末梢の交感神経終末のα₂を刺激して交感神経を抑える。メチルドパは<b>妊婦の全経過で使える</b></td><td>眠気・うつ状態</td></tr>
+          <tr><th>NA枯渇</th><td>レセルピン</td><td>（現在あまり使わない）</td><td><b>抑うつ</b></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>β遮断薬</h3>
+      <div class="tbl"><table class="wide">
+        <thead><tr><th>分類</th><th>薬</th><th>適応</th><th>禁忌・注意</th></tr></thead>
+        <tbody>
+          <tr><th>非選択的β</th><td>プロプラノロール</td><td>高血圧・不整脈・狭心症</td><td><b>気管支喘息</b>、高度徐脈・房室ブロック、急性心不全。<b>異型狭心症</b>は悪化。副作用に<b>うつ</b>・不眠・悪夢</td></tr>
+          <tr><th>選択的β₁</th><td>アテノロール、<b>ビソプロロール</b></td><td>高血圧・不整脈・狭心症。ビソプロロールは<b>慢性心不全</b>に適応</td><td>喘息には慎重に</td></tr>
+          <tr><th>αβ</th><td><b>カルベジロール</b>、ラベタロール</td><td>高血圧・狭心症。カルベジロールは<b>慢性心不全</b>に適応。ラベタロールは妊婦に使える</td><td>β₂も遮断するため<b>気管支喘息に禁忌</b></td></tr>
+        </tbody>
+      </table></div>
+      <div class="box mem"><div class="bt">ISA（内因性交感神経刺激作用）</div>
+        <p>弱いβ刺激作用をもつβ遮断薬（ラベタロールなど）は、心機能・心拍出量の低下が緩やかで、高齢者・徐脈の患者に向く。ISAのない薬は頻脈・虚血性心疾患に向く。<b>カルベジロールはISAをもたない</b>。「ISA＝内因性交感神経<b>抑制</b>作用」は×（2024年問20ウ）。</p>
+      </div>
+      <div class="box kin"><div class="bt">禁忌肢</div>
+        <p><b>気管支喘息にβ遮断薬（プロプラノロール・カルベジロール）</b>：β₂遮断で気管支攣縮、重篤な喘息発作。<br><b>異型（冠攣縮性）狭心症に非選択的β遮断薬</b>：β₂遮断で冠動脈の拡張が妨げられ、冠攣縮が悪化して狭心発作・心筋梗塞。<br>どちらも2023〜2025年に毎年出題。</p>
+      </div>
+      <div class="box cl"><div class="bt">臨床例：前立腺肥大と高血圧</div>
+        <p>前立腺肥大症を合併した高血圧患者には、α₁遮断薬（プラゾシン）が良い適応（2023年問12エ・2024年問35ア）。「禁忌」とする選択肢は×（2025年問12ウ）。ただし高齢者では起立性低血圧・転倒に注意。</p>
+      </div>
+    </div>
+    <div class="ex">
+      <div class="et">例題 4-1 <span class="chip c-past">2025年 問13</span></div>
+      <p>正しいものを3つ選べ。<br>ア プロプラノロールは異型狭心症を有する高血圧患者に良い適応　イ プロプラノロールは気管支喘息を有する高血圧患者に良い適応　ウ ビソプロロールは選択的β₁遮断薬　エ ビソプロロールは慢性心不全に適応がある　オ カルベジロールは慢性心不全に適応がある</p>
+      <details><summary>答えを見る</summary><p><b>ウ・エ・オ</b>。ア・イは禁忌肢。</p></details>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="ch" id="c5">
+    <h2><span class="cn">5</span><span class="tt">コリン作動薬 <span class="chip c-past">2023年 問17</span></span></h2>
+    <div class="card">
+      <div class="tbl"><table class="wide">
+        <thead><tr><th>分類</th><th>薬</th><th>特徴・適応</th><th>禁忌・副作用</th></tr></thead>
+        <tbody>
+          <tr><th>直接型（コリンエステル類）</th><td>アセチルコリン、ベタネコール</td><td>ACh：ChEで速やかに分解され作用時間は5〜30秒。ベタネコールは分解されにくく、BBBを通りにくい</td><td>気管支喘息、甲状腺機能亢進症、消化性潰瘍 など</td></tr>
+          <tr><th>直接型（アルカロイド）</th><td><b>ピロカルピン</b></td><td>M₃刺激で毛様体筋収縮・縮瞳→眼房水流出↑→<b>緑内障</b>の治療・診断。<b>ChEで分解されない</b></td><td>虹彩炎（縮瞳で癒着）。副作用に発汗・流涎・下痢</td></tr>
+          <tr><th>間接型（可逆的ChE阻害）</th><td><b>ネオスチグミン</b>、ジスチグミン、エドロホニウム</td><td>ACh分解を遅らせACh濃度↑。重症筋無力症、術後の腸管麻痺・排尿困難、緑内障</td><td><b>器質的な腸閉塞・尿路閉塞</b>。コリン作動性クリーゼ（縮瞳・下痢・発汗・徐脈・気管支攣縮・線維束性収縮）</td></tr>
+          <tr><th>非可逆的ChE阻害</th><td><b>サリン</b>、パラチオン、マラチオン（有機リン）</td><td>ChEがリン酸化され回復に長時間。<b>皮膚からも吸収</b>（地下鉄サリン事件）</td><td>中毒の治療にアトロピン</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box kin"><div class="bt">禁忌肢：器質的腸閉塞にネオスチグミン</div>
+        <p>閉塞した腸の蠕動を強めるため腸管内圧が上がり、<b>腸管穿孔・腹膜炎</b>を起こしうる。使えるのは神経性（麻痺性）の腸管麻痺だけ（2023年問17エ）。</p>
+      </div>
+      <div class="box trap"><div class="bt">ひっかけ</div>
+        <p>「ピロカルピンは緑内障に禁忌」<b>×</b>（治療薬）。「ピロカルピンはChEで容易に分解される」<b>×</b>。「ネオスチグミンの副作用に散瞳」<b>×</b>（縮瞳）。直接型コリン作動薬はムスカリン受容体を刺激して多様な効果を出すため、<b>臨床適応は限られている</b>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="ch" id="c6">
+    <h2><span class="cn">6</span><span class="tt">抗コリン薬（抗ムスカリン薬） <span class="chip c-streak">3年連続</span></span></h2>
+    <div class="card">
+      <p>ムスカリン受容体を遮断して副交感神経の作用を抑える（副交感神経遮断薬）。代表はアトロピン。抗コリン薬には抗ニコチン薬も含まれるが、一般に抗ムスカリン薬を指す。</p>
+      <h3>臨床応用（記述頻出）</h3>
+      <ol class="pts">
+        <li><b>ち</b>：鎮痙薬（消化管・胆管・尿路の平滑筋の痙攣による痛み）</li>
+        <li><b>い</b>：胃・十二指腸潰瘍治療薬（胃液分泌抑制と胃腸管攣縮の軽減）</li>
+        <li><b>さ</b>：散瞳薬（眼底検査。瞳孔括約筋・毛様体筋の弛緩）</li>
+        <li><b>き</b>：気管支拡張薬（喘息・COPD）</li>
+        <li><b>は</b>：排尿障害治療薬（頻尿・失禁）</li>
+        <li><b>ま</b>：麻酔前投与（唾液・気道分泌の抑制、迷走神経反射による心機能抑制の予防）</li>
+        <li><b>う</b>：有機リン化合物などのChE阻害薬中毒</li>
+        <li><b>じょ</b>：徐脈・房室ブロック</li>
+      </ol>
+      <p class="note">語呂：「ちいさきはまううじょ（小さき浜（で）舞う遊女）」</p>
+      <div class="box mem"><div class="bt">抗コリン作用（副作用）</div>
+        <p><b>口渇・便秘・排尿障害</b>（ほかに散瞳・眼圧上昇・頻脈）。「口渇・<b>下痢</b>・排尿障害」は×（2023年問17ア）。</p>
+      </div>
+      <div class="box kin"><div class="bt">禁忌肢：抗ムスカリン薬の禁忌疾患</div>
+        <p><b>緑内障</b>：散瞳で隅角が閉じ眼圧が急上昇（急性緑内障発作→失明のおそれ）。<br><b>前立腺肥大症（排尿困難）</b>：排尿筋が弛緩し尿閉。<br><b>麻痺性イレウス</b>：腸管運動がさらに抑えられ悪化。<br><b>重篤な心疾患</b>：頻脈で悪化。</p>
+        <p>抗ムスカリン薬は適応となる疾患が多く処方機会も多い。眼底検査・消化器検査（バリウム・内視鏡）でも使う。禁忌の緑内障・前立腺肥大症は頻度の高い疾患なので、<b>問診で禁忌疾患を確認する重要性が高い</b>。</p>
+      </div>
+      <div class="box cl"><div class="bt">臨床例</div>
+        <p>前立腺肥大症の高齢男性に、胃カメラ前の鎮痙目的で抗ムスカリン薬を注射すると、検査後に尿が出なくなる（尿閉）。抗コリン作用をもつIa群抗不整脈薬（ジソピラミド）も、緑内障・前立腺肥大症には禁忌。</p>
+      </div>
+    </div>
+    <div class="ex">
+      <div class="et">例題 6-1 <span class="chip c-past">2025年 問14</span></div>
+      <p>正しいものを3つ選べ。<br>ア M₃刺激で気管支平滑筋は拡張　イ M₃刺激で消化管蠕動は抑制　ウ M₃刺激で縮瞳　エ 抗コリン作用の代表例は口渇・便秘・排尿障害　オ AChは速やかに分解されるため末梢血中では検出されない</p>
+      <details><summary>答えを見る</summary><p><b>ウ・エ・オ</b>。</p></details>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="ch" id="c7">
+    <h2><span class="cn">7</span><span class="tt">記述問題対策（解答例つき） <span class="chip c-streak">3年連続</span></span></h2>
+    <div class="card">
+      <p>自律神経の記述は毎年ほぼ同じ題が出ている。以下の解答例をそのまま再現できるように練習する。図示問題は答案に描く図も載せた。</p>
+
+      <div class="ex in">
+        <div class="et">記述1（図示）Gタンパク質共役型受容体の細胞内情報伝達について、Gs・Gi・Gqにフォーカスして図を書いて説明せよ。またGs・Gi・Gq共役型受容体にはどのようなものがあるかについても記述せよ。<span class="chip c-past">2023年 問1・2024年 問51・2025年 問51</span></div>
+        <details><summary>解答例を見る</summary><div class="ans">
+          <p class="ah">答案に描く図</p>
+          <div data-fig="gpcr_ans"></div>
+          <p class="ah">解答例</p>
+          <p>Gタンパク質共役型受容体（GPCR）は、1本のペプチド鎖が細胞膜を7回貫通する受容体で、細胞内でα・β・γサブユニットからなる三量体Gタンパク質と共役している。リガンドが結合すると受容体の立体構造が変化し、αサブユニットに結合していたGDPがGTPに置き換わってαサブユニットが活性化し、βγ複合体から離れて効果器に作用する。三量体Gタンパク質はαサブユニットの種類によってGs・Gi・Gqに分類される。</p>
+          <p><b>Gs</b>：アデニル酸シクラーゼを活性化し、ATPから細胞内cAMPを産生させる。cAMPはプロテインキナーゼA（PKA）を活性化する（例：心筋ではリアノジン受容体のリン酸化でCa²⁺放出が増え、収縮力が増す）。</p>
+          <p><b>Gi</b>：アデニル酸シクラーゼを抑制し、細胞内cAMPを低下させて細胞応答を抑える。</p>
+          <p><b>Gq</b>：ホスホリパーゼC（PLCβ）を活性化し、PIP₂をイノシトール三リン酸（IP₃）とジアシルグリセロール（DG）に分解する。IP₃は小胞体のIP₃受容体に結合してCa²⁺を放出させ、DGはプロテインキナーゼC（PKC）を活性化する（例：血管平滑筋の収縮）。</p>
+          <p>共役型受容体の例：<b>Gs</b>…アドレナリンβ₁・β₂・β₃受容体、ドパミンD₁受容体、バソプレシンV₂受容体。<b>Gi</b>…アドレナリンα₂受容体、ムスカリンM₂受容体、ドパミンD₂受容体。<b>Gq</b>…アドレナリンα₁受容体、ムスカリンM₁・M₃受容体、アンジオテンシンII AT₁受容体。</p>
+          <p class="ah">採点のポイント</p>
+          <ul><li>受容体を<b>7回貫通</b>で描く（□や○で済ませない）</li><li>αサブユニットの種類で分類されること</li><li>Gs：AC↑→cAMP↑→PKA／Gi：AC↓→cAMP↓／Gq：PLC→IP₃・DG→Ca²⁺↑・PKC</li><li>受容体例：Gs β₁β₂β₃、Gi α₂M₂、Gq α₁M₁M₃</li></ul>
+        </div></details>
+      </div>
+
+      <div class="ex in">
+        <div class="et">記述2（図表）アドレナリンとノルアドレナリンの血圧・心拍数・末梢血管抵抗・気管支に与える影響について、両者を対比させつつ図表を用いて説明せよ。<span class="chip c-past">2023年 問2・2024年 問52・2025年 問52</span></div>
+        <details><summary>解答例を見る</summary><div class="ans">
+          <p class="ah">答案に描く図</p>
+          <div data-fig="adrna_trace"></div>
+          <div class="tbl"><table>
+            <thead><tr><th></th><th>アドレナリン</th><th>ノルアドレナリン</th></tr></thead>
+            <tbody>
+              <tr><th>受容体</th><td>α₁・β₁・β₂いずれも強い</td><td>α₁強い・β₁弱い・β₂ほぼなし</td></tr>
+              <tr><th>収縮期血圧</th><td>↑（β₁：1回拍出量↑）</td><td>↑↑</td></tr>
+              <tr><th>拡張期血圧</th><td>↓（β₂：骨格筋などの血管拡張）</td><td>↑（α₁：全身の血管収縮）</td></tr>
+              <tr><th>心拍数</th><td>↑（β₁）</td><td>↓（血圧上昇による迷走神経反射）</td></tr>
+              <tr><th>末梢血管抵抗</th><td>↓</td><td>↑↑</td></tr>
+              <tr><th>心拍出量</th><td>↑↑</td><td>↑〜↓</td></tr>
+              <tr><th>平均血圧</th><td>↑（やや）</td><td>↑↑</td></tr>
+              <tr><th>気管支</th><td>拡張（β₂）</td><td>ほぼ変化なし</td></tr>
+            </tbody>
+          </table></div>
+          <p class="ah">解答例</p>
+          <p>アドレナリンはα₁・β₁・β₂受容体への作用がいずれも強い。β₁作用により心拍数と心収縮力が増して1回拍出量が増え、収縮期血圧は上昇する。一方、骨格筋などの血管ではβ₂作用による拡張がα₁作用による収縮を上回るため、末梢血管抵抗は低下し、拡張期血圧は低下する。平均血圧はやや上昇する。β₂作用により気管支平滑筋は弛緩し、気管支は拡張する。</p>
+          <p>ノルアドレナリンはα₁作用が強く、β₁作用は弱く、β₂作用はほとんどない。α₁作用で全身の血管が収縮するため末梢血管抵抗が上昇し、収縮期・拡張期血圧ともに上昇する。β₁作用はあるが、血圧上昇によって圧受容器反射（迷走神経）が働き、心拍数はむしろ低下する。β₂作用がほとんどないため気管支への作用はない。</p>
+          <p>このため臨床では、気管支攣縮・血圧低下を伴うアナフィラキシーショックにはアドレナリンを、末梢血管が拡張して血圧が下がる敗血症性ショックにはノルアドレナリンを第一選択とする。</p>
+          <p class="ah">採点のポイント</p>
+          <ul><li>4項目すべてを両者で対比する（表＋図）</li><li>アドレナリンの拡張期血圧↓・末梢血管抵抗↓はβ₂による</li><li>ノルアドレナリンの心拍数↓は<b>反射性</b>であること</li></ul>
+        </div></details>
+      </div>
+
+      <div class="ex in">
+        <div class="et">記述3 ドパミンは投与量によって現れる薬理作用が異なる。この理由について説明するとともに、それぞれの用量でどのような作用が現れるかについても記述せよ。<span class="chip c-past">2023年 問3・2024年 問53</span></div>
+        <details><summary>解答例を見る</summary><div class="ans">
+          <div data-fig="dopa"></div>
+          <p class="ah">解答例</p>
+          <p>ドパミンは末梢のドパミンD₁受容体、アドレナリンβ₁受容体、α₁受容体を刺激するが、受容体ごとに親和性が異なり、用量の増加に伴ってD₁→β₁→α₁の順に作用が現れる。つまり、用量によって刺激される受容体が異なるため、現れる薬理作用が異なる。</p>
+          <p><b>低用量</b>：D₁受容体刺激により腎臓・腸間膜・冠動脈の血管が拡張し、腎血流量が増加して利尿作用が現れる。</p>
+          <p><b>中用量</b>：β₁受容体刺激により心拍数・心収縮力が増加し、心拍出量が増加する。</p>
+          <p><b>高用量</b>：α₁受容体刺激により血管が収縮し、血圧が上昇する。</p>
+          <p>なお、ドパミンは中枢の重要な神経伝達物質だが、血液脳関門を通過しないため全身投与しても中枢作用は現れない。</p>
+        </div></details>
+      </div>
+
+      <div class="ex in">
+        <div class="et">記述4 抗ムスカリン薬（アトロピン代用薬）の臨床応用について記述せよ。<span class="chip c-past">2023年 問4・2024年 問59</span></div>
+        <details><summary>解答例を見る</summary><div class="ans">
+          <p class="ah">解答例</p>
+          <p>抗ムスカリン薬はムスカリン受容体を遮断して副交感神経の作用を抑える薬で、次のように臨床応用される。</p>
+          <ol class="pts"><li>鎮痙薬：消化管・胆管・尿路の平滑筋の痙攣による痛みを和らげる。</li><li>胃・十二指腸潰瘍治療薬：胃液分泌抑制と胃腸管攣縮の軽減による疼痛の緩和。</li><li>散瞳薬：点眼で瞳孔括約筋・毛様体筋を弛緩させ、散瞳・調節麻痺を起こす（眼底検査）。</li><li>気管支拡張薬：気管支喘息やCOPD（慢性気管支炎・肺気腫）で気管支を拡張させる。</li><li>排尿障害治療薬：膀胱収縮抑制作用により頻尿・失禁を治療する。</li><li>麻酔前投与：手術中の唾液・気道分泌を抑え、迷走神経反射による心機能抑制を防ぐ。</li><li>有機リン化合物などコリンエステラーゼ阻害薬による中毒の治療。</li><li>迷走神経反射による徐脈・房室ブロックの治療。</li></ol>
+          <p>抗ムスカリン薬は適応となる疾患が多く処方機会も多い。また眼底検査や消化器系の検査（バリウム検査・内視鏡検査）でも使用される。一方、禁忌となる緑内障や排尿困難（特に前立腺肥大症）は頻度の高い疾患であり、問診で禁忌疾患の有無を確認する重要性が高い。</p>
+          <p class="ah">採点のポイント</p>
+          <ul><li>8項目（ちいさきはまううじょ）</li><li>禁忌（緑内障・前立腺肥大症・麻痺性イレウス）と問診の重要性まで書けると加点</li></ul>
+        </div></details>
+      </div>
+
+      <div class="ex in">
+        <div class="et">記述5 敗血症性ショックではどのような薬理作用を有する薬物が必要か、簡潔に記述せよ。<span class="chip c-past">2024年 問47</span></div>
+        <details><summary>解答例を見る</summary><div class="ans">
+          <p class="ah">解答例</p>
+          <p>敗血症性ショックでは、炎症により末梢血管が拡張して末梢血管抵抗が低下し、血圧が下がっている。このため、α₁受容体刺激による血管収縮作用で末梢血管抵抗を上げ、血圧を上昇させる薬物が必要である。α₁作用が強くβ₁作用が弱いノルアドレナリンが第一選択となる。</p>
+        </div></details>
+      </div>
+
+      <div class="ex in">
+        <div class="et">記述6 ドーパミンではなくL-DOPAがパーキンソン病治療に用いられる理由を簡潔に記述せよ。<span class="chip c-past">2024年 問45</span></div>
+        <details><summary>解答例を見る</summary><div class="ans">
+          <p class="ah">解答例</p>
+          <p>パーキンソン病では脳内（黒質線条体）のドパミンが不足しているが、ドパミンは血液脳関門を通過しないため、末梢から投与しても脳内に届かない。L-DOPAは血液脳関門の中性アミノ酸輸送系（LAT）によって脳内に取り込まれ、脳内でドパ脱炭酸酵素によりドパミンに変換されるため、治療に用いられる。</p>
+        </div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="ch" id="c8">
+    <h2><span class="cn">8</span><span class="tt">頻出ポイントまとめ</span></h2>
+    <div class="card">
+      <p>2023〜2025年の自律神経の選択肢から、正誤判定に使われた文を集めた。</p>
+      <div class="tbl"><table class="ox">
+        <thead><tr><th>文</th><th>正誤</th></tr></thead>
+        <tbody>
+          <tr><td>自律神経系は中枢神経系に含まれる</td><td class="x">×</td></tr>
+          <tr><td>交感神経は胸腰髄、副交感神経は脳幹と仙髄に起始する</td><td class="o">○</td></tr>
+          <tr><td>腹部迷走神経の90%は求心性線維である</td><td class="o">○</td></tr>
+          <tr><td>心室にはM₂受容体（副交感神経）が分布している</td><td class="x">×</td></tr>
+          <tr><td>α₂刺激で交感神経終末からのNA放出は促進される</td><td class="x">×</td></tr>
+          <tr><td>内尿道括約筋はα₁刺激で収縮する</td><td class="o">○</td></tr>
+          <tr><td>膀胱平滑筋のM₃刺激は筋肉を弛緩させる</td><td class="x">×</td></tr>
+          <tr><td>肝細胞のβ₂刺激はグリコーゲン分解を促進する</td><td class="o">○</td></tr>
+          <tr><td>冠動脈ではα₁よりβ₂が優位に発現している</td><td class="o">○</td></tr>
+          <tr><td>骨格筋・心臓・肺の血管はβ₂優位、腹部内臓・腎臓はα₁優位</td><td class="o">○</td></tr>
+          <tr><td>β₂に対するNAの親和性はアドレナリンより低い</td><td class="o">○</td></tr>
+          <tr><td>イソプレナリンは内因性カテコールアミンである</td><td class="x">×</td></tr>
+          <tr><td>アナフィラキシーの第一選択はノルアドレナリン</td><td class="x">×</td></tr>
+          <tr><td>敗血症性ショックの血圧低下にはまずアドレナリン</td><td class="x">×</td></tr>
+          <tr><td>アドレナリンは局所の止血作用を有する</td><td class="o">○</td></tr>
+          <tr><td>ドパミンは血液脳関門を通過する</td><td class="x">×</td></tr>
+          <tr><td>エフェドリンは血液脳関門を通過する</td><td class="o">○</td></tr>
+          <tr><td>エフェドリンは直接的β₂刺激作用を有する</td><td class="o">○</td></tr>
+          <tr><td>メタンフェタミンは間接型アドレナリン作動薬である</td><td class="o">○</td></tr>
+          <tr><td>メタンフェタミンは麻薬取締法で規制されている</td><td class="x">×（覚醒剤取締法）</td></tr>
+          <tr><td>ドブタミンの心拍数増加作用は収縮力増加作用より弱い</td><td class="o">○</td></tr>
+          <tr><td>クロニジンで血圧は上昇する</td><td class="x">×</td></tr>
+          <tr><td>レセルピンの副作用に抑うつがある</td><td class="o">○</td></tr>
+          <tr><td>プラゾシンは前立腺肥大を合併した高血圧に禁忌</td><td class="x">×</td></tr>
+          <tr><td>メチルドパは妊娠中の高血圧に禁忌</td><td class="x">×</td></tr>
+          <tr><td>プロプラノロールの副作用にうつ状態がある</td><td class="o">○</td></tr>
+          <tr><td>カルベジロールはISAを有する</td><td class="x">×</td></tr>
+          <tr><td>ビソプロロール・カルベジロールは慢性心不全に適応がある</td><td class="o">○</td></tr>
+          <tr><td>M₁刺激は胃酸分泌を亢進する</td><td class="o">○</td></tr>
+          <tr><td>M₂刺激は消化管蠕動を亢進する</td><td class="x">×</td></tr>
+          <tr><td>AChはコリンアセチルトランスフェラーゼで分解される</td><td class="x">×</td></tr>
+          <tr><td>サリンは皮膚からも吸収される</td><td class="o">○</td></tr>
+          <tr><td>ピロカルピンは緑内障に禁忌である</td><td class="x">×</td></tr>
+          <tr><td>ネオスチグミンの副作用に縮瞳がある</td><td class="o">○</td></tr>
+        </tbody>
+      </table></div>
+      <a class="go" href="index.html#s1">自律の短答問題を解く ›</a>
+    </div>
+  </section>
+
+  <a class="back" href="#top">目次へ戻る</a>
+  <footer>自律神経薬理学テキスト（徳留先生範囲）</footer>
+</div>
+
+<script>
+// ===== 図（SVG）=====
+const FIG=(function(){
+const T=(x,y,s,o={})=>`<text x="${x}" y="${y}" class="${o.c||'f-tx'}"${o.a?` text-anchor="${o.a}"`:''}${o.s?` style="font-size:${o.s}px"`:''}>${s}</text>`;
+const line=(x1,y1,x2,y2,c='f-mu',arr)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${c}"${arr?' marker-end="url(#fa)"':''}/>`;
+const box=(x,y,w,h,lines,c='f-box',tc='f-tx')=>{let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" class="${c}"/>`;
+  const n=lines.length;lines.forEach((l,i)=>s+=T(x+w/2,y+h/2+(i-(n-1)/2)*15+4,l,{a:'middle',c:tc}));return s};
+const svg=(w,h,body,label)=>`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${label||''}" style="max-width:${w}px">${body}</svg>`;
+
+// ---- 心電図 ----
+function seeded(seed){let s=seed>>>0;return()=>{s=(s*1103515245+12345)>>>0;return (s>>>8)/16777216}}
+const G=(t,t0,a,w)=>a*Math.exp(-((t-t0)**2)/(2*w*w));
+const beatN=(t,p=true)=>[...(p?[[t-0.17,1.5,0.028]]:[]),[t-0.025,-1,0.008],[t,11,0.011],[t+0.027,-3,0.01],[t+0.3,2.8,0.05]];
+const beatW=t=>[[t,9,0.035],[t+0.085,-5.5,0.04],[t+0.34,-3.2,0.07]];
+function ecg(kind){
+  const W=600,H=124,base=74,dur=6,mm=4; // 25 mm/s, 10 mm/mV
+  let comps=[],extra=()=>0;const r=seeded(17);
+  if(kind==='nsr'){for(let t=0.35;t<dur;t+=0.8)comps.push(...beatN(t))}
+  if(kind==='psvt'){for(let t=0.2;t<dur;t+=0.4)comps.push(...beatN(t,false))}
+  if(kind==='af'){[0.3,0.82,1.25,2.02,2.46,3.3,3.72,4.5,5.2,5.62].forEach(t=>comps.push(...beatN(t,false)));
+    extra=t=>0.45*Math.sin(2*Math.PI*6.3*t)+0.35*Math.sin(2*Math.PI*8.7*t+1)+0.3*Math.sin(2*Math.PI*5.1*t+2.2)+0.2*Math.sin(2*Math.PI*11.3*t+.5)}
+  if(kind==='afl'){for(let t=0.36;t<dur;t+=0.8)comps.push(...beatN(t,false).filter(c=>c[1]!==2.8));
+    extra=t=>{const x=((t/0.2)%1+1)%1;return x<0.75?1.3-(x/0.75)*3.2:-1.9+((x-0.75)/0.25)*3.2}}
+  if(kind==='pvc'){[0.35,1.15,1.95].forEach(t=>comps.push(...beatN(t)));comps.push(...beatW(2.45));[3.55,4.35,5.15].forEach(t=>comps.push(...beatN(t)))}
+  if(kind==='vt'){for(let t=0.2;t<dur;t+=0.4)comps.push([t,8,0.045],[t+0.13,-6.5,0.055])}
+  if(kind==='tdp'){extra=t=>{const env=0.25+0.75*Math.abs(Math.sin(Math.PI*t/2.6));return 9*env*Math.sin(2*Math.PI*4.1*t)}}
+  if(kind==='vf'){const f=[[4.3,1.6,0],[6.1,1.1,1],[3.2,1.3,2],[7.7,0.7,.4]];extra=t=>f.reduce((s,[q,a,p])=>s+a*Math.sin(2*Math.PI*q*t+p+0.6*Math.sin(t*1.3)),0)}
+  let pts=[];for(let t=0;t<=dur;t+=0.002){let v=extra(t);for(const c of comps)v+=G(t,c[0],c[1],c[2]);pts.push(`${(t*100).toFixed(1)},${(base-v*mm).toFixed(1)}`)}
+  let g='';for(let x=0;x<=W;x+=4)g+=`M${x} 0V${H}`;for(let y=0;y<=H;y+=4)g+=`M0 ${y}H${W}`;
+  let gm='';for(let x=0;x<=W;x+=20)gm+=`M${x} 0V${H}`;for(let y=4;y<=H;y+=20)gm+=`M0 ${y}H${W}`;
+  return svg(W,H,`<rect width="${W}" height="${H}" class="f-ecgbg"/><path d="${g}" class="f-ecg1"/><path d="${gm}" class="f-ecg2"/><polyline points="${pts.join(' ')}" class="f-trace"/>`,'心電図')+
+   '<figcaption>記録速度 25 mm/秒（小さいマス＝1 mm＝0.04秒、大きいマス＝5 mm＝0.2秒）</figcaption>';
+}
+
+// ---- 心室筋・洞結節の活動電位 ----
+function apV(){
+  const b=`<path d="M30 170H66 L72 30 L84 52 C110 58 180 60 210 72 C235 90 255 165 280 170 H360" class="f-curve"/>`+
+  line(26,20,26,186)+line(26,186,364,186)+T(30,15,'mV',{c:'f-sm'})+
+  T(20,34,'+20',{a:'end',c:'f-sm'})+T(20,174,'−90',{a:'end',c:'f-sm'})+line(24,170,28,170)+line(24,30,28,30)+
+  [[48,162,'4'],[60,96,'0'],[90,40,'1'],[150,50,'2'],[262,118,'3'],[320,162,'4']].map(([x,y,s])=>`<circle cx="${x}" cy="${y}" r="9" class="f-dot"/>`+T(x,y+4,s,{a:'middle',c:'f-dotx'})).join('');
+  return svg(380,196,b,'心室筋の活動電位')+'<figcaption>心室筋：⓪ I<sub>Na</sub>（Na⁺流入）① I<sub>to</sub>（K⁺流出）② I<sub>Ca</sub>（Ca²⁺流入）＝ I<sub>Kr</sub>・I<sub>Ks</sub>（K⁺流出）③ I<sub>K</sub>＋I<sub>K1</sub>＞I<sub>Ca</sub> ④ I<sub>K1</sub>で約−90 mVを維持</figcaption>';
+}
+function apSA(){
+  const seg=x=>`L${x+70} 112 C${x+80} 60 ${x+88} 52 ${x+96} 52 C${x+110} 60 ${x+125} 120 ${x+140} 150`;
+  const b=`<path d="M30 150 ${seg(30)} ${seg(170)}" class="f-curve"/>`+
+  line(26,20,26,186)+line(26,186,364,186)+line(24,150,28,150)+T(20,154,'−60',{a:'end',c:'f-sm'})+
+  `<line x1="28" y1="112" x2="360" y2="112" class="f-dash"/>`+T(360,106,'閾値',{a:'end',c:'f-sm'})+
+  [[70,140,'4'],[108,80,'0'],[160,104,'3']].map(([x,y,s])=>`<circle cx="${x}" cy="${y}" r="9" class="f-dot"/>`+T(x,y+4,s,{a:'middle',c:'f-dotx'})).join('');
+  return svg(380,196,b,'洞結節の活動電位')+'<figcaption>洞結節・房室結節：第1・2相がない。静止膜電位は約−60 mVと浅く、I<sub>K1</sub>がない。④ I<sub>f</sub>で緩徐に脱分極（自動能）⓪ Ca²⁺流入 ③ I<sub>K</sub>（K⁺流出）</figcaption>';
+}
+// ---- I_K1 の電流-電位曲線 ----
+function ik1(){
+  const X=v=>40+(v+130)*1.9, Y=i=>110-i*1.6;
+  let p=[];for(let v=-130;v<=40;v+=2){let i;if(v<-90)i=(v+90)*1.6;else i=22*((v+90)/20)*Math.exp(-(v+90)/18)+((v>-90&&v<-89)?0:0);p.push(`${X(v).toFixed(1)},${Y(i).toFixed(1)}`)}
+  const b=line(40,110,365,110)+line(X(0),12,X(0),200)+`<polyline points="${p.join(' ')}" class="f-curve"/>`+
+  `<circle cx="${X(-90)}" cy="110" r="3.5" class="f-pt"/>`+T(X(-90),128,'E<tspan baseline-shift="sub" style="font-size:9px">K</tspan>（約−90）',{a:'middle',c:'f-sm'})+
+  T(365,104,'膜電位',{a:'end',c:'f-sm'})+T(X(0)+6,22,'外向き電流',{c:'f-sm'})+T(X(0)+6,196,'内向き電流',{c:'f-sm'})+T(X(0)-4,124,'0 mV',{a:'end',c:'f-sm'})+
+  T(X(-70),70,'小さな外向き電流',{a:'middle',c:'f-acx'})+T(X(-20),96,'脱分極側ではほぼ0',{a:'middle',c:'f-acx'});
+  return svg(380,206,b,'内向き整流性K⁺チャネルの電流-電位曲線')+'<figcaption>E<sub>K</sub>より過分極側では大きな内向き電流、脱分極側では外向き電流が小さく、さらに脱分極すると流れなくなる（内向き整流）。</figcaption>';
+}
+// ---- 圧-容積ループ ----
+const PVX=v=>40+v*1.75, PVY=p=>196-p*1.3;
+function loop(esv,edv,edp,pmax,c){const a=PVX(esv),b=PVX(edv);
+  return `<path d="M${a} ${PVY(6)} Q${(a+b)/2} ${PVY(4)} ${b} ${PVY(edp)} L${b} ${PVY(pmax*0.65)} Q${(a+b)/2+10} ${PVY(pmax*1.12)} ${a} ${PVY(pmax*0.9)} Z" class="${c}"/>`}
+const pvAxes=()=>line(40,196,365,196)+line(40,196,40,14)+T(365,212,'左室容積',{a:'end',c:'f-sm'})+T(46,22,'左室圧',{c:'f-sm'});
+function pvPre(){
+  const b=pvAxes()+loop(50,120,10,115,'f-loop')+loop(52,150,16,118,'f-loop2')+
+  T(PVX(85),PVY(52),'ア',{a:'middle',c:'f-tx'})+T(PVX(140),PVY(70),'イ',{a:'middle',c:'f-acx'})+
+  T(PVX(120),208,'',{});
+  return svg(380,220,b,'圧-容積ループ')+'<figcaption>ア（実線）：変化前　イ（緑）：変化後。収縮力・後負荷は一定とする。</figcaption>';
+}
+function pvHF(){
+  const b=pvAxes()+loop(50,120,10,115,'f-loop')+loop(120,175,22,85,'f-loop2')+
+  `<path d="M${PVX(45)} ${PVY(5)} Q${PVX(85)} ${PVY(6)} ${PVX(100)} ${PVY(30)} L${PVX(100)} ${PVY(80)} Q${PVX(70)} ${PVY(135)} ${PVX(45)} ${PVY(105)} Z" class="f-loop3"/>`+
+  T(PVX(80),PVY(30),'正常',{a:'middle',c:'f-tx'})+T(PVX(150),PVY(60),'HFrEF',{a:'middle',c:'f-acx'})+T(PVX(100)+6,PVY(32),'HFpEF',{c:'f-wx'});
+  return svg(380,220,b,'HFrEFとHFpEFの圧-容積ループ')+'<figcaption>HFrEF：収縮力低下で収縮末期容積・拡張末期容積が増え、ループが右へ移動し1回拍出量（幅）が減る。HFpEF：左室が硬く（コンプライアンス低下）、拡張末期容積が小さいのに拡張末期圧が高い。</figcaption>';
+}
+// ---- Frank-Starling ----
+function fs(){
+  const X=p=>44+p*9, Y=s=>186-s*1.6;
+  const cv=(m,k)=>{let s=[];for(let p=0;p<=35;p+=1)s.push(`${X(p).toFixed(1)},${Y(m*(1-Math.exp(-p/k))).toFixed(1)}`);return s.join(' ')};
+  const sf=p=>55*(1-Math.exp(-p/9));
+  const b=line(44,186,370,186)+line(44,186,44,14)+T(370,202,'前負荷（左室拡張末期圧）',{a:'end',c:'f-sm'})+T(50,22,'1回拍出量',{c:'f-sm'})+
+  `<polyline points="${cv(100,7)}" class="f-curve2"/><polyline points="${cv(55,9)}" class="f-curve"/>`+
+  `<line x1="${X(18)}" y1="20" x2="${X(18)}" y2="186" class="f-dash"/>`+T(X(18)+4,30,'18 mmHg',{c:'f-sm'})+T(X(18)+4,46,'→ 肺うっ血',{c:'f-sm'})+
+  `<circle cx="${X(28)}" cy="${Y(sf(28))}" r="4" class="f-pt"/>`+T(X(28),Y(sf(28))-9,'a',{a:'middle'})+
+  `<circle cx="${X(8)}" cy="${Y(sf(8))}" r="4" class="f-pt"/>`+T(X(8)-9,Y(sf(8))+4,'b',{a:'end'})+
+  T(X(30),Y(98),'正常',{a:'middle',c:'f-sm'})+T(X(33),Y(sf(33))+16,'不全心',{a:'middle',c:'f-sm'});
+  return svg(380,208,b,'Frank-Starling曲線')+'<figcaption>上の曲線：正常心　下の曲線：不全心。点aは不全心のうっ血状態を示す。</figcaption>';
+}
+// ---- Forrester分類 ----
+function forrester(pt){
+  const X=p=>40+p*9, Y=c=>196-c*42;
+  let b=`<rect x="40" y="${Y(4.3)}" width="${X(35)-40}" height="${Y(0)-Y(4.3)}" class="f-bg"/>`+
+  line(40,196,X(35),196)+line(40,196,40,Y(4.3))+
+  `<line x1="${X(18)}" y1="${Y(4.3)}" x2="${X(18)}" y2="196" class="f-dash"/><line x1="40" y1="${Y(2.2)}" x2="${X(35)}" y2="${Y(2.2)}" class="f-dash"/>`+
+  T(X(18),210,'18',{a:'middle',c:'f-sm'})+T(34,Y(2.2)+4,'2.2',{a:'end',c:'f-sm'})+
+  T(X(35),226,'肺動脈楔入圧（mmHg）',{a:'end',c:'f-sm'})+T(46,Y(4.3)+14,'心係数（L/分/m²）',{c:'f-sm'})+
+  T(X(9),Y(3.3),'I',{a:'middle',c:'f-big'})+T(X(26.5),Y(3.3),'II',{a:'middle',c:'f-big'})+T(X(9),Y(1.1),'III',{a:'middle',c:'f-big'})+T(X(26.5),Y(1.1),'IV',{a:'middle',c:'f-big'});
+  if(!pt)b+=T(X(9),Y(3.3)+18,'正常',{a:'middle',c:'f-sm'})+T(X(26.5),Y(3.3)+18,'肺うっ血',{a:'middle',c:'f-sm'})+T(X(9),Y(1.1)+18,'低拍出（末梢循環不全）',{a:'middle',c:'f-sm'})+T(X(26.5),Y(1.1)+18,'うっ血＋低拍出',{a:'middle',c:'f-sm'});
+  else b+=`<circle cx="${X(pt[0])}" cy="${Y(pt[1])}" r="5" class="f-pt"/>`+T(X(pt[0])+9,Y(pt[1])+16,'この患者',{c:'f-acx'});
+  return svg(380,232,b,'Forrester分類')}
+// ---- 用量-反応曲線 ----
+function dr(){
+  const X=l=>40+(l+11)*45, Y=r=>190-r*1.6;
+  const c=(ec,max)=>{let s=[];for(let l=-11;l<=-3.9;l+=0.1)s.push(`${X(l).toFixed(1)},${Y(max/(1+Math.pow(10,ec-l))).toFixed(1)}`);return s.join(' ')};
+  const b=line(40,190,370,190)+line(40,190,40,16)+T(370,206,'アゴニスト濃度（log）',{a:'end',c:'f-sm'})+T(46,24,'反応（%）',{c:'f-sm'})+
+  T(34,Y(100)+4,'100',{a:'end',c:'f-sm'})+line(37,Y(100),40,Y(100))+
+  `<polyline points="${c(-8.5,100)}" class="f-curve"/><polyline points="${c(-6.5,100)}" class="f-curve2"/><polyline points="${c(-8.5,48)}" class="f-curve3"/>`+
+  T(X(-8.9),Y(70),'単独',{a:'end',c:'f-tx'})+T(X(-5.4),Y(80),'ア',{c:'f-acx'})+T(X(-5.4),Y(52),'イ',{c:'f-wx'});
+  return svg(380,210,b,'用量-反応曲線')+'<figcaption>黒：アゴニスト単独　ア・イ：それぞれ異なるアンタゴニストの共存下</figcaption>';
+}
+// ---- Gs / Gi / Gq ----
+function gpcr(){
+  const col=(x,head,cls,rows,ex)=>box(x,8,112,30,[head],cls,'f-hx')+rows.map((r,i)=>(i?line(x+56,46+i*44-8,x+56,46+i*44,'f-mu',1):line(x+56,38,x+56,46,'f-mu',1))+box(x,46+i*44,112,32,[r])).join('')+T(x+56,46+rows.length*44+12,ex,{a:'middle',c:'f-sm'});
+  const b=col(6,'Gs','f-boxa',['AC 活性化','cAMP↑','PKA 活性化'],'β₁・β₂・β₃ など')+col(134,'Gi','f-boxa',['AC 抑制','cAMP↓','細胞応答の抑制'],'α₂・M₂ など')+col(262,'Gq','f-boxa',['PLC 活性化','IP₃・DG↑','Ca²⁺↑・PKC'],'α₁・M₁・M₃・AT₁ など');
+  return svg(380,196,b,'Gs・Gi・Gqの情報伝達')+'<figcaption>AC：アデニル酸シクラーゼ　PLC：ホスホリパーゼC　IP₃は小胞体のIP₃受容体に働いてCa²⁺を放出させ、DGはPKCを活性化する。</figcaption>';
+}
+// ---- アドレナリン vs ノルアドレナリン ----
+function adrna(){
+  const rows=[['収縮期血圧','↑','↑↑'],['拡張期血圧','↓','↑'],['心拍数','↑','↓（反射）'],['末梢血管抵抗','↓','↑↑'],['気管支','拡張','ほぼ不変']];
+  let b=T(130,20,'アドレナリン',{a:'middle',c:'f-hx2'})+T(285,20,'ノルアドレナリン',{a:'middle',c:'f-hx2'});
+  rows.forEach((r,i)=>{const y=34+i*30;b+=`<rect x="4" y="${y}" width="372" height="28" rx="5" class="${i%2?'f-row':'f-row2'}"/>`+T(14,y+19,r[0])+T(130,y+19,r[1],{a:'middle',c:'f-acx'})+T(285,y+19,r[2],{a:'middle',c:'f-acx'})});
+  return svg(380,190,b,'アドレナリンとノルアドレナリンの比較')+'<figcaption>アドレナリン：α₁・β₁・β₂作用がいずれも強い。ノルアドレナリン：α₁作用が強く、β₁作用は弱く、β₂作用はほとんどない。</figcaption>';
+}
+// ---- ドパミンの用量 ----
+function dopa(){
+  const c=(x,h,r,e1,e2)=>box(x,8,112,30,[h],'f-boxa','f-hx')+line(x+56,38,x+56,52,'f-mu',1)+box(x,52,112,32,[r])+line(x+56,84,x+56,98,'f-mu',1)+box(x,98,112,46,[e1,e2]);
+  return svg(380,152,c(6,'低用量','D₁','腎血流↑','利尿')+c(134,'中用量','β₁','心収縮力・心拍数↑','心拍出量↑')+c(262,'高用量','α₁','血管収縮','血圧↑'),'ドパミンの用量依存性作用')+'<figcaption>用量によって刺激される受容体が異なる（D₁→β₁→α₁）。</figcaption>';
+}
+// ---- RAA系 ----
+function raa(){
+  let b=box(4,20,128,32,['アンジオテンシノゲン'])+T(68,66,'（肝臓）',{a:'middle',c:'f-sm'})+line(132,36,174,36,'f-mu',1)+T(153,14,'レニン',{a:'middle',c:'f-sm'})+
+  box(176,20,70,32,['AngⅠ'])+line(246,36,284,36,'f-mu',1)+T(265,14,'ACE',{a:'middle',c:'f-sm'})+box(286,20,90,32,['AngⅡ'],'f-boxa','f-hx')+
+  line(331,52,331,60,'f-mu',1)+box(220,62,156,30,['AT₁受容体（Gq）'])+
+  ['血管収縮','アルドステロン分泌','バソプレシン分泌・口渇','近位尿細管Na⁺再吸収','交感神経活性化','心筋肥大・線維化'].map((s,i)=>T(232,112+i*17,'・'+s,{c:'f-sm'})).join('')+
+  T(8,90,'阻害薬',{c:'f-hx2'})+T(8,104,'直接的レニン阻害薬 → レニン',{c:'f-sm'})+T(8,122,'ACE阻害薬 → ACE',{c:'f-sm'})+T(8,140,'（ブラジキニン分解も抑制）',{c:'f-sm'})+T(8,158,'ARB → AT₁受容体',{c:'f-sm'})+T(8,176,'MR拮抗薬 → アルドステロン',{c:'f-sm'})+T(8,194,'の受容体',{c:'f-sm'});
+  return svg(380,212,b,'レニン・アンジオテンシン・アルドステロン系')+'<figcaption>レニンは輸入細動脈の傍糸球体細胞が分泌する酵素。AngⅠは10個、AngⅡは8個のアミノ酸からなる。</figcaption>';
+}
+// ---- ARNI ----
+function arni(){
+  let b=box(60,6,130,32,['ネプリライシン'],'f-boxa','f-hx')+T(198,26,'← サクビトリルが阻害',{c:'f-wx'})+
+  line(110,38,90,62,'f-mu',1)+line(150,38,290,62,'f-mu',1)+T(88,54,'分解',{a:'end',c:'f-sm'})+T(230,54,'分解',{c:'f-sm'})+
+  box(10,64,160,32,['ANP・BNP↑'])+box(210,64,160,32,['AngⅡ↑'])+
+  line(90,96,90,114,'f-mu',1)+line(290,96,290,114,'f-mu',1)+
+  box(10,116,160,46,['利尿→前負荷↓','血管拡張→後負荷↓'])+box(210,116,160,46,['AT₁受容体を','バルサルタンが遮断'],'f-box','f-wx');
+  return svg(380,170,b,'ARNIの作用機序')+'<figcaption>ネプリライシンを阻害するとANP・BNPだけでなくAngⅡも増えるため、ARB（バルサルタン）を1:1で組み合わせてRAA系の活性化を防ぐ。投与中はBNPではなくNT-proBNPで評価する。</figcaption>';
+}
+// ---- ネフロンと利尿薬の作用部位 ----
+function nephron(labeled){
+  let b=`<circle cx="52" cy="40" r="20" class="f-box"/>`+T(52,44,'糸球体',{a:'middle',c:'f-sm'})+
+  `<path d="M72 40 C100 20 110 60 130 40 C150 22 150 70 140 80 L140 190 Q150 214 170 190 L170 80 Q175 56 200 60 C222 64 218 40 240 40 L300 40 L300 200" class="f-tube"/>`+
+  `<line x1="20" y1="104" x2="360" y2="104" class="f-dash"/>`+T(356,98,'皮質',{a:'end',c:'f-sm'})+T(356,118,'髄質',{a:'end',c:'f-sm'});
+  const m=[[110,40,'①','近位尿細管'],[140,150,'②','ヘンレ下行脚'],[170,150,'③','太い上行脚'],[235,40,'④','遠位曲尿細管'],[300,150,'⑤','集合管']];
+  m.forEach(([x,y,n,l])=>{b+=`<circle cx="${x}" cy="${y}" r="11" class="f-dot"/>`+T(x,y+5,n,{a:'middle',c:'f-dotx'});if(labeled){const L={'②':[x-16,y+34,'end'],'③':[x+16,y+34,'start'],'⑤':[x+16,y+4,'start']}[n]||[x,y-17,'middle'];b+=T(L[0],L[1],l,{a:L[2],c:'f-sm'})}});
+  return svg(380,222,b,'ネフロンの模式図')+(labeled?'<figcaption>①炭酸脱水酵素阻害薬（アセタゾラミド）・浸透圧利尿薬　②浸透圧利尿薬（水再吸収を阻害）　③ループ利尿薬（NKCC2）　④チアジド系（NCC）　⑤MR拮抗薬・トリアムテレン（ENaC）・トルバプタン（V₂受容体）</figcaption>':'');
+}
+const F={ecg_nsr:()=>ecg('nsr'),ecg_af:()=>ecg('af'),ecg_afl:()=>ecg('afl'),ecg_psvt:()=>ecg('psvt'),ecg_vt:()=>ecg('vt'),ecg_tdp:()=>ecg('tdp'),ecg_vf:()=>ecg('vf'),ecg_pvc:()=>ecg('pvc'),
+  ap_v:apV,ap_sa:apSA,ik1,pv_pre:pvPre,pv_hf:pvHF,fs,forrester:()=>forrester(),forrester_pt:()=>forrester([25,1.8]),dr,gpcr,adrna,dopa,raa,arni,nephron:()=>nephron(false),nephron_l:()=>nephron(true)};
+const fn=k=>F[k]?'<figure class="fig">'+F[k]()+'</figure>':'';
+fn.add=(k,g)=>{F[k]=g};fn.h={T,line,box,svg};
+return fn;
+})();
+// ===== テキスト用の追加図 =====
+(function(){
+const {T,line,box,svg}=FIG.h;
+// ADMEの流れ
+FIG.add('adme',()=>{
+  let b=box(4,8,80,40,['経口投与'],'f-boxa','f-hx')+line(84,28,98,28,'f-mu',1)+
+  box(100,8,80,40,['小腸','（吸収）'])+line(180,28,194,28,'f-mu',1)+
+  box(196,8,70,40,['門脈'])+line(266,28,280,28,'f-mu',1)+
+  box(282,8,94,40,['肝臓','初回通過効果'],'f-box','f-wx')+
+  line(329,48,329,74,'f-mu',1)+
+  box(150,76,226,40,['全身循環（血中濃度）'],'f-boxa','f-hx')+
+  box(4,76,110,40,['静脈内投与','（吸収過程なし）'])+line(114,96,148,96,'f-mu',1)+
+  line(190,116,70,146,'f-mu',1)+line(250,116,195,146,'f-mu',1)+line(330,116,320,146,'f-mu',1)+
+  box(4,148,124,46,['分布','遊離形のみ組織へ'])+box(136,148,116,46,['代謝','肝臓 CYP450'])+box(260,148,116,46,['排泄','腎→尿・肝→胆汁']);
+  return svg(380,200,b,'薬物動態ADMEの流れ')+'<figcaption>A：吸収（Absorption）D：分布（Distribution）M：代謝（Metabolism）E：排泄（Excretion）。経口薬は全身循環に入る前に小腸・肝臓で代謝される（初回通過効果）。</figcaption>';
+});
+// バイオアベイラビリティ
+FIG.add('ba',()=>{
+  const X=t=>44+t*26, Y=c=>180-c*1.5;
+  let iv=[],po=[];for(let t=0;t<=12;t+=0.1){iv.push(`${X(t).toFixed(1)},${Y(100*Math.exp(-0.28*t)).toFixed(1)}`);const c=48*(Math.exp(-0.28*t)-Math.exp(-1.6*t))*1.4;po.push(`${X(t).toFixed(1)},${Y(c).toFixed(1)}`)}
+  const b=line(44,180,370,180)+line(44,180,44,14)+T(370,196,'時間',{a:'end',c:'f-sm'})+T(50,22,'血漿中薬物濃度',{c:'f-sm'})+
+  `<polygon points="44,180 ${iv.join(' ')} ${X(12)},180" class="f-area1"/><polygon points="44,180 ${po.join(' ')} ${X(12)},180" class="f-area2"/>`+
+  `<polyline points="${iv.join(' ')}" class="f-curve"/><polyline points="${po.join(' ')}" class="f-curve2"/>`+
+  T(X(1.6),Y(78),'静脈内投与',{c:'f-tx'})+T(X(5.2),Y(34),'経口投与',{c:'f-acx'});
+  return svg(380,202,b,'経口投与と静脈内投与の血中濃度')+'<figcaption>バイオアベイラビリティ（%）＝ AUC（経口）÷ AUC（静脈内注射）× 100。AUCは曲線と横軸に囲まれた面積。</figcaption>';
+});
+// 受容体4種
+FIG.add('rec4',()=>{
+  const mem=`<rect x="0" y="66" width="380" height="16" class="f-mem"/>`;
+  const A=`<rect x="22" y="56" width="16" height="36" rx="4" class="f-boxa"/><rect x="52" y="56" width="16" height="36" rx="4" class="f-boxa"/>`+line(45,40,45,104,'f-ac2',1)+T(45,34,'イオン',{a:'middle',c:'f-sm'});
+  const B=`<path d="M108 46 L112 56 L116 92 L122 92 L126 56 L132 56 L136 92 L142 92 L146 56 L152 56 L156 92 L162 92 L166 56 L172 56 L176 92 L180 102" class="f-curve2" style="stroke-width:2.4;stroke-linejoin:round"/>`+
+    `<circle cx="160" cy="110" r="9" class="f-boxa"/>`+T(160,114,'G',{a:'middle',c:'f-hx'});
+  const C=`<rect x="214" y="44" width="12" height="70" rx="3" class="f-boxa"/><rect x="236" y="44" width="12" height="70" rx="3" class="f-boxa"/><rect x="210" y="100" width="20" height="16" rx="3" class="f-box"/><rect x="232" y="100" width="20" height="16" rx="3" class="f-box"/>`;
+  const D=`<circle cx="320" cy="40" r="6" class="f-pt"/>`+line(320,48,320,104,'f-mu',1)+`<ellipse cx="320" cy="124" rx="34" ry="14" class="f-box"/>`+T(320,128,'核',{a:'middle',c:'f-sm'});
+  const lab=[[58,'イオンチャネル型','4〜5回貫通'],[140,'GPCR','7回貫通'],[231,'酵素型','1回貫通'],[320,'核内（細胞内）','膜を通過']].map(([x,a,c])=>T(x,158,a,{a:'middle',c:'f-hx2'})+T(x,174,c,{a:'middle',c:'f-sm'})).join('');
+  return svg(380,182,mem+A+B+C+D+lab+T(376,62,'細胞外',{a:'end',c:'f-sm'})+T(376,96,'細胞内',{a:'end',c:'f-sm'}),'受容体の4つのタイプ');
+});
+// 膜電位
+FIG.add('mp',()=>{
+  const b=line(40,16,40,190)+line(40,190,370,190)+T(46,24,'膜電位（mV）',{c:'f-sm'})+
+  `<line x1="40" y1="110" x2="370" y2="110" class="f-dash"/>`+T(366,104,'閾膜電位',{a:'end',c:'f-sm'})+
+  `<path d="M40 138 H130 Q140 136 146 110 L156 36 Q162 30 168 40 L188 150 Q196 164 214 150 Q236 138 260 138 H370" class="f-curve"/>`+
+  T(34,142,'−70',{a:'end',c:'f-sm'})+T(34,42,'+30',{a:'end',c:'f-sm'})+
+  T(84,130,'静止膜電位',{a:'middle',c:'f-sm'})+T(128,70,'脱分極',{a:'end',c:'f-acx'})+T(184,80,'再分極',{c:'f-acx'})+T(214,178,'過分極',{a:'middle',c:'f-wx'})+T(162,24,'活動電位',{a:'middle',c:'f-hx2'});
+  return svg(380,200,b,'活動電位')+'<figcaption>静止時の膜電位が静止膜電位（負）。上昇が脱分極、低下が過分極。閾膜電位を超えると活動電位が発生する。</figcaption>';
+});
+// 血液脳関門
+FIG.add('bbb',()=>{
+  let b=`<rect x="0" y="0" width="380" height="40" class="f-bg"/>`+T(8,24,'脳実質',{c:'f-hx2'})+
+  `<rect x="0" y="52" width="380" height="22" class="f-boxa"/>`+T(190,67,'内皮細胞（密着結合）・ペリサイト・アストロサイト',{a:'middle',c:'f-sm'})+
+  `<rect x="0" y="86" width="380" height="44" class="f-bg"/>`+T(8,124,'血液',{c:'f-hx2'});
+  [[60,'脂溶性',''],[128,'非イオン型',''],[196,'遊離型','分子量<500']].forEach(([x,a,c])=>{b+=line(x,118,x,12,'f-ac2',1)+T(x,150,a,{a:'middle',c:'f-acx'})+(c?T(x,166,c,{a:'middle',c:'f-acx'}):'')});
+  b+=line(270,118,270,12,'f-mu',1)+T(270,150,'輸送担体',{a:'middle',c:'f-tx'})+T(270,166,'GLUT1・LAT',{a:'middle',c:'f-sm'});
+  b+=line(340,118,340,80,'f-ng2')+T(340,82,'×',{a:'middle',c:'f-ngx'})+T(340,150,'イオン型',{a:'middle',c:'f-ngx'})+T(340,166,'ドパミン',{a:'middle',c:'f-ngx'});
+  return svg(380,174,b,'血液脳関門')+'<figcaption>脳の毛細血管は内皮細胞が密着しているため細胞間隙を通れない。単純拡散で通るのは高脂溶性・低分子・非イオン型・遊離型の物質。グルコース（GLUT1）やL-ドパ（LAT）は輸送担体で取り込まれ、インスリンなどは受容体を介して移行する。ドパミンは通らない。</figcaption>';
+});
+// 細胞膜の輸送
+FIG.add('trans',()=>{
+  const mem=`<rect x="0" y="64" width="380" height="18" class="f-mem"/>`;
+  const col=(x,t1,t2,c)=>T(x,124,t1,{a:'middle',c:'f-hx2',s:11})+T(x,140,t2,{a:'middle',c:c||'f-sm',s:10});
+  let b=mem+line(40,30,40,110,'f-mu',1)+col(40,'単純拡散','脂溶性')+
+  `<rect x="98" y="56" width="10" height="34" rx="3" class="f-boxa"/><rect x="116" y="56" width="10" height="34" rx="3" class="f-boxa"/>`+line(112,30,112,110,'f-ac2',1)+col(112,'チャネル','ATP不要','f-acx')+
+  `<rect x="170" y="54" width="44" height="38" rx="8" class="f-box"/>`+T(192,78,'ATP',{a:'middle',c:'f-sm'})+line(192,110,192,30,'f-mu',1)+col(192,'ポンプ','ATP使用')+
+  `<rect x="250" y="54" width="40" height="38" rx="14" class="f-box"/>`+line(270,30,270,110,'f-mu',1)+col(270,'SLC輸送体','共輸送・交換')+
+  `<rect x="324" y="54" width="40" height="38" rx="6" class="f-box"/>`+line(344,110,344,30,'f-mu',1)+col(344,'ABC輸送体','ATP結合');
+  return svg(380,150,b,'細胞膜の物質輸送')+'<figcaption>チャネル（イオンチャネル・水チャネル）と輸送体（ポンプ・SLC輸送体・ABC輸送体）に大別される。イオンチャネルは濃度勾配に従う受動輸送でATPを使わない。</figcaption>';
+});
+})();
+// ===== 自律神経用 =====
+(function(){
+const {T,line,box,svg}=FIG.h;
+FIG.add('ans',()=>{
+  const row=(y,head,c1,g,t2,rc,eff,cls)=>T(4,y-8,head,{c:'f-hx2'})+
+    box(4,y,92,40,c1)+line(96,y+20,148,y+20,'f-mu',1)+T(122,y+14,'ACh',{a:'middle',c:'f-sm'})+
+    box(150,y,74,40,[g,'（N受容体）'])+line(224,y+20,278,y+20,'f-mu',1)+T(251,y+14,t2,{a:'middle',c:cls})+
+    box(280,y,96,40,[eff,rc]);
+  let b=row(22,'交感神経',['胸腰髄','T1〜L3'],'神経節','NA','α・β受容体','効果器','f-acx')+
+        row(104,'副交感神経',['脳幹・仙髄','S2〜S4'],'神経節','ACh','M受容体','効果器','f-acx')+
+        T(190,162,'節前線維：交感は短い・副交感は長い（神経節が効果器の近くにある）',{a:'middle',c:'f-sm'})+
+        T(190,178,'例外：汗腺の交感神経節後線維はACh（M受容体）',{a:'middle',c:'f-sm'});
+  return svg(380,186,b,'自律神経の伝達')+'<figcaption>神経節の伝達物質はどちらもアセチルコリン（受容体はニコチン型）。節後線維の伝達物質は交感神経がノルアドレナリン、副交感神経がアセチルコリン。</figcaption>';
+});
+FIG.add('nasyn',()=>{
+  let b=`<rect x="14" y="8" width="210" height="96" rx="40" class="f-box"/>`+
+  T(119,30,'チロシン→ドパ→ドパミン→NA',{a:'middle',c:'f-tx',s:11})+
+  `<circle cx="80" cy="66" r="17" class="f-boxa"/>`+T(80,70,'NA',{a:'middle',c:'f-hx'})+T(80,96,'小胞に貯蔵',{a:'middle',c:'f-sm'})+
+  line(80,104,80,150,'f-mu',1)+T(86,132,'放出',{c:'f-sm'})+
+  line(150,148,150,106,'f-mu',1)+T(156,132,'再取り込み',{c:'f-sm'})+
+  `<rect x="182" y="96" width="36" height="18" rx="5" class="f-boxa"/>`+T(200,109,'α₂',{a:'middle',c:'f-hx'})+T(224,109,'放出抑制（−）',{c:'f-wx',s:11})+
+  `<rect x="14" y="154" width="352" height="34" rx="8" class="f-box"/>`+T(190,175,'効果器のα₁・β受容体',{a:'middle',c:'f-tx'})+
+  T(300,146,'分解：COMT・MAO',{a:'middle',c:'f-sm'})+
+  T(236,24,'レセルピン：NA枯渇',{c:'f-sm'})+T(236,42,'メタンフェタミン：',{c:'f-sm'})+T(236,56,'放出促進・分解阻害',{c:'f-sm'})+T(236,74,'クロニジン：α₂刺激',{c:'f-sm'});
+  return svg(380,196,b,'ノルアドレナリンの神経終末')+'<figcaption>交感神経終末ではチロシンからNAが合成されて小胞に貯蔵され、放出後は効果器の受容体に作用する。シナプス前膜のα₂受容体は負のフィードバックで放出を抑える。再取り込みとCOMT・MAOで作用が終わる。</figcaption>';
+});
+FIG.add('achsyn',()=>{
+  let b=`<rect x="30" y="8" width="230" height="96" rx="40" class="f-box"/>`+
+  T(145,30,'アセチルCoA＋コリン → ACh',{a:'middle',c:'f-tx'})+T(145,46,'（コリンアセチルトランスフェラーゼ）',{a:'middle',c:'f-sm'})+
+  `<circle cx="110" cy="74" r="16" class="f-boxa"/>`+T(110,78,'ACh',{a:'middle',c:'f-hx'})+
+  line(110,104,110,150,'f-mu',1)+T(116,130,'放出',{c:'f-sm'})+
+  `<rect x="186" y="118" width="120" height="22" rx="6" class="f-boxa"/>`+T(246,133,'AChE で分解',{a:'middle',c:'f-hx'})+
+  line(246,118,246,104,'f-mu',1)+T(252,96,'コリンは再利用',{c:'f-sm'})+
+  `<rect x="20" y="154" width="340" height="34" rx="8" class="f-box"/>`+T(190,175,'ムスカリン受容体（効果器）／ニコチン受容体（神経節・骨格筋）',{a:'middle',c:'f-tx'});
+  return svg(380,196,b,'アセチルコリンの神経終末')+'<figcaption>AChはシナプス間隙でアセチルコリンエステラーゼ（AChE）により速やかに分解され、作用時間は5〜30秒と短い。コリンエステラーゼ阻害薬はこの分解を止めてACh濃度を上げる。</figcaption>';
+});
+})();
+// ===== 記述解答例の図 =====
+(function(){
+const {T,line,box,svg}=FIG.h;
+const tm=(x,y)=>{let d=`M${x} ${y-12}`;for(let i=0;i<7;i++){const a=x+4+i*6;d+=` L${a} ${i%2?y:y+24} L${a+3} ${i%2?y:y+24}`}return `<path d="${d} L${x+48} ${y+32}" class="f-curve2" style="stroke-width:2;stroke-linejoin:round"/>`};
+FIG.add('gpcr_ans',()=>{
+  let b=`<rect x="0" y="40" width="380" height="24" class="f-mem"/>`+T(376,34,'細胞外',{a:'end',c:'f-sm'})+T(376,78,'細胞内',{a:'end',c:'f-sm'})+
+  `<circle cx="22" cy="18" r="5" class="f-pt"/><circle cx="140" cy="18" r="5" class="f-pt"/><circle cx="246" cy="18" r="5" class="f-pt"/>`+
+  tm(12,40)+tm(130,40)+tm(236,40)+
+  `<circle cx="58" cy="88" r="12" class="f-boxa"/>`+T(58,92,'Gs',{a:'middle',c:'f-hx',s:11})+
+  `<circle cx="176" cy="88" r="12" class="f-boxa"/>`+T(176,92,'Gi',{a:'middle',c:'f-hx',s:11})+
+  `<circle cx="282" cy="88" r="12" class="f-boxa"/>`+T(282,92,'Gq',{a:'middle',c:'f-hx',s:11})+
+  `<rect x="94" y="34" width="26" height="40" rx="5" class="f-box"/>`+T(107,58,'AC',{a:'middle',c:'f-sm'})+
+  line(68,82,94,70,'f-mu',1)+T(80,104,'＋',{a:'middle',c:'f-acx'})+line(166,82,121,70,'f-mu',1)+T(148,104,'−',{a:'middle',c:'f-wx'})+
+  T(107,126,'ATP → cAMP',{a:'middle',c:'f-tx'})+line(107,132,107,148,'f-mu',1)+box(72,150,70,26,['PKA'])+
+  `<rect x="312" y="34" width="34" height="40" rx="5" class="f-box"/>`+T(329,58,'PLC',{a:'middle',c:'f-sm'})+line(294,84,312,70,'f-mu',1)+
+  T(329,96,'PIP₂',{a:'middle',c:'f-sm'})+line(318,102,286,118,'f-mu',1)+line(340,102,352,118,'f-mu',1)+
+  T(282,130,'IP₃',{a:'middle',c:'f-tx'})+T(356,130,'DG',{a:'middle',c:'f-tx'})+line(356,136,356,150,'f-mu',1)+box(330,152,48,24,['PKC'])+
+  `<rect x="232" y="150" width="80" height="34" rx="16" class="f-box"/>`+T(272,171,'小胞体',{a:'middle',c:'f-sm'})+line(282,136,282,148,'f-mu',1)+
+  line(250,150,226,128,'f-mu',1)+T(220,124,'Ca²⁺↑',{a:'end',c:'f-acx'})+
+  T(36,214,'β₁・β₂・β₃',{a:'middle',c:'f-sm'})+T(170,214,'α₂・M₂',{a:'middle',c:'f-sm'})+T(282,214,'α₁・M₁・M₃・AT₁',{a:'middle',c:'f-sm'});
+  return svg(380,222,b,'Gs・Gi・Gqの情報伝達（答案用）')+'<figcaption>受容体は必ず7回貫通させて描く。赤丸はリガンド。下段は代表的な共役受容体。</figcaption>';
+});
+FIG.add('adrna_trace',()=>{
+  const W=160,H=56,rows=[['血圧',0],['心拍数',1],['末梢血管抵抗',2]];
+  const pan=(x,y,kind,col)=>{let s=`<rect x="${x}" y="${y}" width="${W}" height="${H}" rx="6" class="f-row"/>`+`<rect x="${x+50}" y="${y}" width="60" height="${H}" class="f-shade"/>`;
+    const p=(base,d)=>`M${x+4} ${y+base} H${x+50} C${x+60} ${y+base} ${x+64} ${y+base-d} ${x+76} ${y+base-d} H${x+104} C${x+114} ${y+base-d} ${x+118} ${y+base} ${x+130} ${y+base} H${x+W-4}`;
+    if(kind===0){const [s1,s2]=col?[20,14]:[16,-6];s+=`<path d="${p(24,s1)}" class="f-curve"/><path d="${p(42,s2)}" class="f-curve2"/>`}
+    else{const d=kind===1?(col?-10:14):(col?16:-14);s+=`<path d="${p(30,d)}" class="f-curve"/>`}
+    return s};
+  let b=T(98,16,'アドレナリン',{a:'middle',c:'f-hx2'})+T(286,16,'ノルアドレナリン',{a:'middle',c:'f-hx2'});
+  rows.forEach(([n,k],i)=>{const y=40+i*(H+22);b+=T(18,y-5,n,{c:'f-sm'})+T(206,y-5,n,{c:'f-sm'})+pan(18,y,k,0)+pan(206,y,k,1)});
+  b+=T(190,272,'網掛け＝静脈内投与　血圧：黒＝収縮期・緑＝拡張期',{a:'middle',c:'f-sm'});
+  return svg(380,280,b,'アドレナリンとノルアドレナリンの血行動態')+'<figcaption>アドレナリン：収縮期↑・拡張期↓（脈圧拡大）、心拍数↑、末梢血管抵抗↓。ノルアドレナリン：収縮期・拡張期とも↑、心拍数は反射性に↓、末梢血管抵抗↑。</figcaption>';
+});
+})();
+
+document.querySelectorAll("[data-fig]").forEach(e=>{e.outerHTML=FIG(e.dataset.fig)});
+const nv=document.querySelector(".nav");if(nv)document.documentElement.style.setProperty("--navh",nv.getBoundingClientRect().height+"px");
+</script>
+
+</body>
+</html>
